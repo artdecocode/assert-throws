@@ -7,7 +7,7 @@ async function assertThrows ({ fn, message, args = [], context = null }) {
         throw new Error('please pass an error message as a string')
     }
 
-    const shouldHaveThrownError = new Error(`${fn} should have thrown`)
+    const shouldHaveThrownError = new Error('Function should have thrown')
     try {
         await fn.call(context, ...args)
         throw shouldHaveThrownError

@@ -19,6 +19,15 @@ const assertThrowsTestSuite = {
         })
         assert(called)
     },
+    async 'should throw without error message'() {
+        try {
+            await assertThrows({
+                async fn() { },
+            })
+        } catch ({ message }) {
+            equal(message, 'Function should have thrown')
+        }
+    },
     async 'should compare error messages'() {
         await assertThrows({
             async fn() {
