@@ -6,6 +6,7 @@ const { equal } = assert
 
 const assertThrowsTestSuite = {
     context,
+
     'should be a function': () => {
         assert.equal(typeof assertThrows, 'function')
     },
@@ -19,7 +20,7 @@ const assertThrowsTestSuite = {
         })
         assert(called)
     },
-    async 'should throw without error message'() {
+    async 'should throw if function does not throw'() {
         try {
             await assertThrows({
                 async fn() { },
@@ -28,7 +29,7 @@ const assertThrowsTestSuite = {
             equal(message, 'Function should have thrown')
         }
     },
-    async 'should compare error messages'() {
+    async 'should assert on error messages'() {
         await assertThrows({
             async fn() {
                 throw new Error('test-error')
@@ -36,7 +37,7 @@ const assertThrowsTestSuite = {
             message: 'test-error',
         })
     },
-    async 'should throw when comparing error messages'() {
+    async 'should throw when asserting on error messages'() {
         try {
             await assertThrows({
                 async fn() {
