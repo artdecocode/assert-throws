@@ -1,7 +1,7 @@
 {
   "name": "assert-throws",
   "version": "1.0.0",
-  "description": "A JavaScript assertion method to check if an async function throws.",
+  "description": "A JavaScript assertion method to check if a sync or async function throws.",
   "main": "src/index.js",
   "scripts": {
     "test": "zoroaster test/spec",
@@ -9,7 +9,8 @@
     "test-watch": "zoroaster test/spec --watch",
     "build-src": "babel src --out-dir es5/src",
     "build-test": "babel test --out-dir es5/test",
-    "build": "run-s build-src build-test"
+    "build": "run-s build-src build-test",
+    "b5": "run-s build test-es5"
   },
   "repository": {
     "type": "git",
