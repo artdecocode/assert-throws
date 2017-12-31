@@ -1,17 +1,23 @@
 {
   "name": "assert-throws",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A JavaScript assertion method to check if an async function throws.",
   "main": "src/index.js",
   "scripts": {
     "test": "zoroaster test/spec",
-    "test-watch": "zoroaster test/spec --watch"
+    "test-es5": "zoroaster es5/test/spec",
+    "test-watch": "zoroaster test/spec --watch",
+    "build-src": "babel src --out-dir es5/src",
+    "build-test": "babel test --out-dir es5/test",
+    "build": "run-s build-src build-test"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/Sobesednik/assert-throws.git"
   },
-  "keywords": ["assert-throws"],
+  "keywords": [
+    "assert-throws"
+  ],
   "author": "Anton <anton@sobes.io>",
   "license": "MIT",
   "bugs": {
@@ -19,6 +25,11 @@
   },
   "homepage": "https://github.com/Sobesednik/assert-throws#readme",
   "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-rename-import": "2.1.1",
+    "babel-preset-env": "1.6.1",
+    "fast-async": "6.3.0",
+    "npm-run-all": "4.1.2",
     "zoroaster": "0.4.6"
   }
 }
