@@ -4,6 +4,15 @@
 or asynchronous function throws. It can also compare properties of the error
 with expected ones.
 
+## ES5
+
+The package uses some newer language features. For your convenience, it's been
+transpiled to be compatible with Node 4. You can use the following snippet.
+
+```js
+const assertThrows = require('assert-throws/es5/src')
+```
+
 ## `assertThrows({ fn: function, message?: string })`
 
 Use `assertThrows` by passing to it an object with `fn` property as a minimum.
