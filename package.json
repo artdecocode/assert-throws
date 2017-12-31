@@ -1,0 +1,24 @@
+{
+  "name": "assert-throws",
+  "version": "0.1.0",
+  "description": "A JavaScript assertion method to check if an async function throws.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "zoroaster test/spec",
+    "test-watch": "zoroaster test/spec --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Sobesednik/assert-throws.git"
+  },
+  "keywords": ["assert-throws"],
+  "author": "Anton <anton@sobes.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sobesednik/assert-throws/issues"
+  },
+  "homepage": "https://github.com/Sobesednik/assert-throws#readme",
+  "devDependencies": {
+    "zoroaster": "0.4.6"
+  }
+}
