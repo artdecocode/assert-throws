@@ -23,7 +23,7 @@ var assertThrowsTestSuite = {
                         return $error(new Error('test-error'));
                     }.bind(this));
                 }
-            })).then(function ($await_3) {
+            })).then(function ($await_4) {
                 try {
                     assert(called);
                     return $return();
@@ -59,9 +59,9 @@ var assertThrowsTestSuite = {
                             return $return();
                         }.bind(this));
                     }
-                })).then(function ($await_4) {
+                })).then(function ($await_5) {
                     try {
-                        return $Try_1_Post();
+                        throw new Error('should have thrown');
                     } catch ($boundEx) {
                         return $Try_1_Catch($boundEx);
                     }
@@ -80,7 +80,7 @@ var assertThrowsTestSuite = {
                     }.bind(this));
                 },
                 message: 'test-error'
-            })).then(function ($await_5) {
+            })).then(function ($await_6) {
                 try {
                     return $return();
                 } catch ($boundEx) {
@@ -116,15 +116,76 @@ var assertThrowsTestSuite = {
                         }.bind(this));
                     },
                     message: 'test-error'
-                })).then(function ($await_6) {
+                })).then(function ($await_7) {
                     try {
-                        return $Try_2_Post();
+                        throw new Error('should have thrown');
                     } catch ($boundEx) {
                         return $Try_2_Catch($boundEx);
                     }
                 }.bind(this), $Try_2_Catch);
             } catch (_ref2) {
                 $Try_2_Catch(_ref2)
+            }
+        }.bind(this));
+    },
+    'should assert on error code'() {
+        return new Promise(function ($return, $error) {
+            return Promise.resolve(assertThrows({
+                fn() {
+                    return new Promise(function ($return, $error) {
+                        var error = new Error('test-error');
+                        error.code = 'ENOENT';
+                        return $error(error);
+                    }.bind(this));
+                },
+                code: 'ENOENT'
+            })).then(function ($await_8) {
+                try {
+                    return $return();
+                } catch ($boundEx) {
+                    return $error($boundEx);
+                }
+            }.bind(this), $error);
+        }.bind(this));
+    },
+    'should throw when asserting on error code'() {
+        return new Promise(function ($return, $error) {
+            var message;
+            var $Try_3_Post = function () {
+                try {
+                    return $return();
+                } catch ($boundEx) {
+                    return $error($boundEx);
+                }
+            }.bind(this);var $Try_3_Catch = function (_ref3) {
+                try {
+                    message = _ref3.message;
+
+                    equal(message, 'ENOENT-actual != ENOENT-assert');
+                    return $Try_3_Post();
+                } catch ($boundEx) {
+                    return $error($boundEx);
+                }
+            }.bind(this);
+            try {
+                return Promise.resolve(assertThrows({
+                    fn() {
+                        return new Promise(function ($return, $error) {
+                            var error = new Error('test-error');
+                            error.code = 'ENOENT-actual';
+                            return $error(error);
+                        }.bind(this));
+                    },
+                    code: 'ENOENT-assert'
+                })).then(function ($await_9) {
+                    try {
+                        throw new Error('should have thrown');
+                    } catch ($boundEx) {
+                        return $Try_3_Catch($boundEx);
+                    }
+                }.bind(this), $Try_3_Catch);
+            } catch (_ref3) {
+                $Try_3_Catch(_ref3)
             }
         }.bind(this));
     },
@@ -135,7 +196,7 @@ var assertThrowsTestSuite = {
                     throw new Error('test-error');
                 },
                 message: 'test-error'
-            })).then(function ($await_7) {
+            })).then(function ($await_10) {
                 try {
                     return $return();
                 } catch ($boundEx) {

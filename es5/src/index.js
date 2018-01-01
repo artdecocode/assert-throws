@@ -5,9 +5,9 @@ var equal = function equal(a, b) {
 };
 function assertThrows(_ref) {
     return new Promise(function ($return, $error) {
-        var fn, message, _ref$args, args, _ref$context, context, shouldHaveThrownError;
+        var fn, message, code, _ref$args, args, _ref$context, context, shouldHaveThrownError;
 
-        fn = _ref.fn, message = _ref.message, _ref$args = _ref.args, args = _ref$args === undefined ? [] : _ref$args, _ref$context = _ref.context, context = _ref$context === undefined ? null : _ref$context;
+        fn = _ref.fn, message = _ref.message, code = _ref.code, _ref$args = _ref.args, args = _ref$args === undefined ? [] : _ref$args, _ref$context = _ref.context, context = _ref$context === undefined ? null : _ref$context;
 
         if (typeof fn !== 'function') return $error(new Error('function expected'));
         if (message && typeof message !== 'string') {
@@ -28,6 +28,9 @@ function assertThrows(_ref) {
                 }
                 if (message) {
                     equal(err.message, message);
+                }
+                if (code) {
+                    equal(err.code, code);
                 }
                 return $Try_1_Post();
             } catch ($boundEx) {
