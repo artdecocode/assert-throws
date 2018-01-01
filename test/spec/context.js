@@ -1,4 +1,4 @@
-const { equal, notEqual } = require('assert')
+const { equal } = require('assert')
 const assertThrows = require('../..')
 
 const contextTestSuite = {
@@ -18,16 +18,19 @@ const contextTestSuite = {
         }
     },
     async 'should pass null context to a function by default'() {
+        const test = 'test-error'
         try {
             await assertThrows({
                 async fn() {
-                    notEqual(this, global)
+                    if (this === global) {
+                        throw new Error(test)
+                    }
                 },
-                code: 'ERR_ASSERTION-assert',
+                message: 'context-assert-error',
             })
             throw new Error('should have thrown')
         } catch ({ message }) {
-            equal(message, 'ERR_ASSERTION != ERR_ASSERTION-assert')
+            equal(message, `${test} != context-assert-error`)
         }
     },
 }

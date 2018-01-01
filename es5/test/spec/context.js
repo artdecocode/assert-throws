@@ -1,6 +1,5 @@
 var _require = require('assert'),
-    equal = _require.equal,
-    notEqual = _require.notEqual;
+    equal = _require.equal;
 
 var assertThrows = require('../../src/');
 
@@ -48,7 +47,9 @@ var contextTestSuite = {
     },
     'should pass null context to a function by default'() {
         return new Promise(function ($return, $error) {
-            var message;
+            var test, message;
+
+            test = 'test-error';
             var $Try_2_Post = function () {
                 try {
                     return $return();
@@ -59,21 +60,22 @@ var contextTestSuite = {
                 try {
                     message = _ref2.message;
 
-                    equal(message, 'ERR_ASSERTION != ERR_ASSERTION-assert');
+                    equal(message, `${test} != context-assert-error`);
                     return $Try_2_Post();
                 } catch ($boundEx) {
                     return $error($boundEx);
                 }
-            }.bind(this);
-            try {
+            }.bind(this);try {
                 return Promise.resolve(assertThrows({
                     fn() {
                         return new Promise(function ($return, $error) {
-                            notEqual(this, global);
+                            if (this === global) {
+                                return $error(new Error(test));
+                            }
                             return $return();
                         }.bind(this));
                     },
-                    code: 'ERR_ASSERTION-assert'
+                    message: 'context-assert-error'
                 })).then(function ($await_4) {
                     try {
                         throw new Error('should have thrown');
