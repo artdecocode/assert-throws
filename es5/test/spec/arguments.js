@@ -83,7 +83,7 @@ var argumentErrorsTestSuite = {
                 try {
                     message = _ref3.message;
 
-                    equal(message, 'please pass an error message as a string');
+                    equal(message, 'please pass an error message as a string or regular expression');
                     return $Try_3_Post();
                 } catch ($boundEx) {
                     return $error($boundEx);

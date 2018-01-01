@@ -47,4 +47,15 @@ const assertThrows = require('.');
     } catch (err) {
         console.log(3, err) // ENOENT != ENOENT1
     }
+
+    try {
+        await assertThrows({
+            async fn() {
+                throw new Error('test-error')
+            },
+            error: new Error('test-error-fail'),
+        })
+    } catch(err) {
+        console.log(4, err)
+    }
 })()

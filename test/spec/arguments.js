@@ -26,7 +26,7 @@ const argumentErrorsTestSuite = {
                 message: 1,
             })
         } catch ({ message }) {
-            equal(message, 'please pass an error message as a string')
+            equal(message, 'please pass an error message as a string or regular expression')
         }
     },
 }

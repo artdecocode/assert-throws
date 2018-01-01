@@ -21,7 +21,7 @@ const assertThrows = require('assert-throws/es5/src')
 
 The package exports a single function as its API.
 
-## `assertThrows({ fn: function, message?: string, code?: string, context?, args?: any[] })`
+## `assertThrows({ fn: function, message?: string|RegExp, code?: string, error?: Error context?, args?: any[] })`
 
 Use `assertThrows` by passing to it an object with `fn` property as a minimum.
 
@@ -70,6 +70,21 @@ const assertThrows = require('assert-throws');
 })()
 ```
 
+The `message` can be a regular expression:
+
+```js
+const assertThrows = require('assert-throws');
+
+(async () => {
+    await assertThrows({
+        async fn() {
+            throw new Error('test-error')
+        },
+        message: /test/
+    })
+})()
+```
+
 The assertion function will throw when messages don't equal.
 
 ```js
@@ -107,6 +122,35 @@ const assertThrows = require('assert-throws');
 })()
 ```
 
+### Strict equality
+
+One can assert on a strict equality of an error.
+
+```js
+const assertThrows = require('assert-throws');
+
+(async () => {
+    const error = new Error('test-error')
+    await assertThrows({
+        async fn() {
+            throw error
+        },
+        error,
+    })
+
+    try {
+        await assertThrows({
+            async fn() {
+                throw error
+            },
+            error: new Error('test-error-fail'),
+        })
+    } catch (err) {
+        console.log(err) // test-error is not strict equal to Error: test-error-fail.
+    }
+})()
+```
+
 ## Context
 
 It is possible to pass a context to the function:
@@ -127,11 +171,13 @@ It is possible to pass arguments to the function:
 
 ```js
 await assertThrows({
-    async fn(test) {
-        throw new Error(test)
+    async fn(message, code) {
+        const error = new Error(message)
+        error.code = code
+        throw error
     },
     message: 'context-assert-error',
-    args: ['test-error-message'],
+    args: ['test-error-message', 'CONTEXT_ASSERT'],
 })
 ```
 

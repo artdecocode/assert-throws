@@ -51,6 +51,50 @@ const assertThrowsTestSuite = {
             equal(message, 'test-error1 != test-error')
         }
     },
+    async 'should pass when asserting on error message with regular expression'() {
+        await assertThrows({
+            async fn() {
+                throw new Error('test-error')
+            },
+            message: /test/,
+        })
+    },
+    async 'should throw when asserting on error message with regular expression'() {
+        try {
+            await assertThrows({
+                async fn() {
+                    throw new Error('test-error')
+                },
+                message: /test-error-assert/,
+            })
+            throw new Error('should have thrown')
+        } catch ({ message }) {
+            equal(message, 'test-error does not match regular expression /test-error-assert/')
+        }
+    },
+    async 'should pass when asserting on error strict equality'() {
+        const error = new Error('test-error')
+        await assertThrows({
+            async fn() {
+                throw error
+            },
+            error,
+        })
+    },
+    async 'should throw when asserting on strict equality'() {
+        const error = new Error('test-error')
+        try {
+            await assertThrows({
+                async fn() {
+                    throw error
+                },
+                error: new Error('test-error-assert'),
+            })
+            throw new Error('should have thrown')
+        } catch ({ message }) {
+            equal(message, 'Error: test-error is not strict equal to Error: test-error-assert.')
+        }
+    },
     async 'should assert on error code'() {
         await assertThrows({
             async fn() {

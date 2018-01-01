@@ -3,15 +3,45 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var equal = function equal(a, b) {
     if (a != b) throw new Error(`${a} != ${b}`);
 };
-function assertThrows(_ref) {
-    return new Promise(function ($return, $error) {
-        var fn, message, code, _ref$args, args, _ref$context, context, shouldHaveThrownError;
 
-        fn = _ref.fn, message = _ref.message, code = _ref.code, _ref$args = _ref.args, args = _ref$args === undefined ? [] : _ref$args, _ref$context = _ref.context, context = _ref$context === undefined ? null : _ref$context;
+function assertMessage(err, message) {
+    if (message instanceof RegExp) {
+        var res = message.test(err.message);
+        if (!res) {
+            throw new Error(`${err.message} does not match regular expression ${message}`);
+        }
+    } else if (message) {
+        equal(err.message, message);
+    }
+}
+
+function assertCode(err, code) {
+    if (code) {
+        equal(err.code, code);
+    }
+}
+
+/**
+ * Assert that a function throws.
+ * @param {object} config
+ * @param {function} config.fn Function to test, either sync or async
+ * @param {any[]} [config.args] Arguments to pass to the function
+ * @param {string|RegExp} [config.message] Message to test against
+ * @param {string} [config.code] Code to test against
+ * @param {Error} [config.error] An error to perform strict comparison against.
+ * @param {object} [config.context] Context in which to execute the function,
+ * global context by default
+ */
+function assertThrows(config) {
+    return new Promise(function ($return, $error) {
+        var fn, message, code, _config$args, args, _config$context, context, error, isMessageRe, shouldHaveThrownError;
+
+        fn = config.fn, message = config.message, code = config.code, _config$args = config.args, args = _config$args === undefined ? [] : _config$args, _config$context = config.context, context = _config$context === undefined ? null : _config$context, error = config.error;
 
         if (typeof fn !== 'function') return $error(new Error('function expected'));
-        if (message && typeof message !== 'string') {
-            return $error(new Error('please pass an error message as a string'));
+        isMessageRe = message instanceof RegExp;
+        if (message && !isMessageRe && typeof message !== 'string') {
+            return $error(new Error('please pass an error message as a string or regular expression'));
         }
 
         shouldHaveThrownError = new Error('Function should have thrown');
@@ -26,12 +56,11 @@ function assertThrows(_ref) {
                 if (err === shouldHaveThrownError) {
                     throw err;
                 }
-                if (message) {
-                    equal(err.message, message);
+                if (error && error !== err) {
+                    throw new Error(`${err} is not strict equal to ${error}.`);
                 }
-                if (code) {
-                    equal(err.code, code);
-                }
+                assertMessage(err, message);
+                assertCode(err, code);
                 return $Try_1_Post();
             } catch ($boundEx) {
                 return $error($boundEx);
