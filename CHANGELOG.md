@@ -1,5 +1,10 @@
 ## 1 January 2018
 
+## 1.2.0
+
+- [feature] assert by `error` (strict equal)
+- [feature] assert by `message` (regular expression)
+
 ## 1.1.0
 
 - [feature] assert by `code`
