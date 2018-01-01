@@ -4,6 +4,10 @@
 or asynchronous function throws. It can also compare properties of the error
 with expected ones.
 
+```sh
+npm i --save-dev assert-throws
+```
+
 ## ES5
 
 The package uses some newer language features. For your convenience, it's been
@@ -12,6 +16,10 @@ transpiled to be compatible with Node 4. You can use the following snippet.
 ```js
 const assertThrows = require('assert-throws/es5/src')
 ```
+
+## API
+
+The package exports a single function as its API.
 
 ## `assertThrows({ fn: function, message?: string })`
 
@@ -45,6 +53,8 @@ const assertThrows = require('assert-throws');
 })()
 ```
 
+### Message
+
 You can pass `message` property to assert on equality of the error message:
 
 ```js
@@ -76,6 +86,53 @@ const assertThrows = require('assert-throws');
         console.log(err) // Error: test-error != error-test
     }
 })()
+```
+
+### Code
+
+Same works for the `code` property:
+
+```js
+const assertThrows = require('assert-throws');
+
+(async () => {
+    await assertThrows({
+        async fn() {
+            const error = new Error('test-error')
+            error.code = 'ENOENT'
+            throw error
+        },
+        code: 'ENOENT',
+    })
+})()
+```
+
+## Context
+
+It is possible to pass a context to the function:
+
+```js
+await assertThrows({
+    async fn() {
+        throw new Error(this.test)
+    },
+    message: 'context-assert-error',
+    context: { test: 'test-error-message' },
+})
+```
+
+## Arguments
+
+It is possible to pass arguments to the function:
+
+```js
+await assertThrows({
+    async fn(test) {
+        throw new Error(test)
+    },
+    message: 'context-assert-error',
+    args: ['test-error-message'],
+})
 ```
 
 ---

@@ -25,6 +25,7 @@ const assertThrowsTestSuite = {
             await assertThrows({
                 async fn() { },
             })
+            throw new Error('should have thrown')
         } catch ({ message }) {
             equal(message, 'Function should have thrown')
         }
@@ -45,8 +46,34 @@ const assertThrowsTestSuite = {
                 },
                 message: 'test-error',
             })
+            throw new Error('should have thrown')
         } catch ({ message }) {
             equal(message, 'test-error1 != test-error')
+        }
+    },
+    async 'should assert on error code'() {
+        await assertThrows({
+            async fn() {
+                const error = new Error('test-error')
+                error.code = 'ENOENT'
+                throw error
+            },
+            code: 'ENOENT',
+        })
+    },
+    async 'should throw when asserting on error code'() {
+        try {
+            await assertThrows({
+                async fn() {
+                    const error = new Error('test-error')
+                    error.code = 'ENOENT-actual'
+                    throw error
+                },
+                code: 'ENOENT-assert',
+            })
+            throw new Error('should have thrown')
+        } catch ({ message }) {
+            equal(message, 'ENOENT-actual != ENOENT-assert')
         }
     },
     async 'should work with sync function'() {
