@@ -21,7 +21,7 @@ const assertThrows = require('.');
             async fn() { },
         })
     } catch (err) {
-        console.log(err) // Error: Function should have thrown
+        console.log(1, err) // Error: Function should have thrown
     }
 
     try {
@@ -32,6 +32,19 @@ const assertThrows = require('.');
             message: 'error-test',
         })
     } catch (err) {
-        console.log(err) // Error: test-error != error-test
+        console.log(2, err) // Error: test-error != error-test
+    }
+
+    try {
+        await assertThrows({
+            async fn() {
+                const error = new Error('test-error')
+                error.code = 'ENOENT'
+                throw error
+            },
+            code: 'ENOENT1',
+        })
+    } catch (err) {
+        console.log(3, err) // ENOENT != ENOENT1
     }
 })()

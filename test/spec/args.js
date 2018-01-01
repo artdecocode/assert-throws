@@ -1,34 +1,22 @@
-const assertThrows = require('../..')
 const { equal } = require('assert')
+const assertThrows = require('../..')
 
-const argErrorsTestSuite = {
-    async 'should throw when function is not passed'() {
+const argsTestSuite = {
+    async 'should pass arguments to a function'() {
+        const test = 'test-arg'
         try {
             await assertThrows({
+                async fn(test) {
+                    throw new Error(test)
+                },
+                message: 'context-assert-error',
+                args: [test],
             })
+            throw new Error('should have thrown')
         } catch ({ message }) {
-            equal(message, 'function expected')
-        }
-    },
-    async 'should throw when function is not a function'() {
-        try {
-            await assertThrows({
-                fn: 'test',
-            })
-        } catch ({ message }) {
-            equal(message, 'function expected')
-        }
-    },
-    async 'should throw when message is passed and is not string'() {
-        try {
-            await assertThrows({
-                fn: () => { throw new Error('test') },
-                message: 1,
-            })
-        } catch ({ message }) {
-            equal(message, 'please pass an error message as a string')
+            equal(message, `${test} != context-assert-error`)
         }
     },
 }
 
-module.exports = argErrorsTestSuite
+module.exports = argsTestSuite

@@ -1,7 +1,7 @@
 const equal = (a, b) => {
     if (a != b) throw new Error(`${a} != ${b}`)
 }
-async function assertThrows ({ fn, message, args = [], context = null }) {
+async function assertThrows ({ fn, message, code, args = [], context = null }) {
     if (typeof fn !== 'function') throw new Error('function expected')
     if (message && typeof message !== 'string') {
         throw new Error('please pass an error message as a string')
@@ -17,6 +17,9 @@ async function assertThrows ({ fn, message, args = [], context = null }) {
         }
         if (message) {
             equal(err.message, message)
+        }
+        if (code) {
+            equal(err.code, code)
         }
     }
 }
