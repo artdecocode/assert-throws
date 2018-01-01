@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "zoroaster test/spec",
-    "test-es5": "zoroaster es5/test/spec",
     "test-watch": "zoroaster test/spec --watch",
+    "test-es5": "zoroaster es5/test/spec",
     "build-src": "babel src --out-dir es5/src",
     "build-test": "babel test --out-dir es5/test",
     "build": "run-s build-src build-test",
@@ -31,6 +31,6 @@
     "babel-preset-env": "1.6.1",
     "fast-async": "6.3.0",
     "npm-run-all": "4.1.2",
-    "zoroaster": "0.4.6"
+    "zoroaster": "0.5.2"
   }
 }
