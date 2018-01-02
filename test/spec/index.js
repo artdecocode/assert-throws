@@ -2,7 +2,7 @@ const assert = require('assert')
 const context = require('../context/')
 const assertThrows = require('../..')
 
-const { equal } = assert
+const { equal, strictEqual } = assert
 
 const assertThrowsTestSuite = {
     context,
@@ -119,6 +119,16 @@ const assertThrowsTestSuite = {
         } catch ({ message }) {
             equal(message, 'ENOENT-actual != ENOENT-assert')
         }
+    },
+    async 'should return an error'() {
+        const error = new Error('test-error')
+        const actual = await assertThrows({
+            fn() {
+                throw error
+            },
+            message: 'test-error',
+        })
+        strictEqual(actual, error)
     },
     async 'should work with sync function'() {
         await assertThrows({

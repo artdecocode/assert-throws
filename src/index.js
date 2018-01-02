@@ -53,6 +53,7 @@ async function assertThrows(config) {
         }
         assertMessage(err, message)
         assertCode(err, code)
+        return err
     }
 }
 

@@ -61,7 +61,7 @@ function assertThrows(config) {
                 }
                 assertMessage(err, message);
                 assertCode(err, code);
-                return $Try_1_Post();
+                return $return(err);
             } catch ($boundEx) {
                 return $error($boundEx);
             }

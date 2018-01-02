@@ -21,9 +21,10 @@ const assertThrows = require('assert-throws/es5/src')
 
 The package exports a single function as its API.
 
-## `assertThrows({ fn: function, message?: string|RegExp, code?: string, error?: Error context?, args?: any[] })`
+## `assertThrows({ fn: function, message?: string|RegExp, code?: string, error?: Error context?, args?: any[] }): Promise.<Error>`
 
 Use `assertThrows` by passing to it an object with `fn` property as a minimum.
+The function will return the thrown error.
 
 ```js
 const assertThrows = require('assert-throws');

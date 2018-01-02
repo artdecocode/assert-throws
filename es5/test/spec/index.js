@@ -2,7 +2,8 @@ var assert = require('assert');
 var context = require('../context/');
 var assertThrows = require('../../src/');
 
-var equal = assert.equal;
+var equal = assert.equal,
+    strictEqual = assert.strictEqual;
 
 
 var assertThrowsTestSuite = {
@@ -307,6 +308,27 @@ var assertThrowsTestSuite = {
             }
         }.bind(this));
     },
+    'should return an error'() {
+        return new Promise(function ($return, $error) {
+            var error, actual;
+
+            error = new Error('test-error');
+            return Promise.resolve(assertThrows({
+                fn() {
+                    throw error;
+                },
+                message: 'test-error'
+            })).then(function ($await_16) {
+                try {
+                    actual = $await_16;
+                    strictEqual(actual, error);
+                    return $return();
+                } catch ($boundEx) {
+                    return $error($boundEx);
+                }
+            }.bind(this), $error);
+        }.bind(this));
+    },
     'should work with sync function'() {
         return new Promise(function ($return, $error) {
             return Promise.resolve(assertThrows({
@@ -314,7 +336,7 @@ var assertThrowsTestSuite = {
                     throw new Error('test-error');
                 },
                 message: 'test-error'
-            })).then(function ($await_16) {
+            })).then(function ($await_17) {
                 try {
                     return $return();
                 } catch ($boundEx) {
