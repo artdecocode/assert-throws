@@ -1,3 +1,9 @@
+## 2 January 2018
+
+## 1.3.0
+
+- [feature] return the thrown error
+
 ## 1 January 2018
 
 ## 1.2.0
