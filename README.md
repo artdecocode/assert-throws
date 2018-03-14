@@ -5,16 +5,7 @@ or asynchronous function throws. It can also compare properties of the error
 with expected ones.
 
 ```sh
-npm i --save-dev assert-throws
-```
-
-## ES5
-
-The package uses some newer language features. For your convenience, it's been
-transpiled to be compatible with Node 4. You can use the following snippet.
-
-```js
-const assertThrows = require('assert-throws/es5/src')
+yarn add -D assert-throws
 ```
 
 ## API
@@ -27,7 +18,8 @@ Use `assertThrows` by passing to it an object with `fn` property as a minimum.
 The function will return the thrown error.
 
 ```js
-const assertThrows = require('assert-throws');
+const assertThrows = require('assert-throws')
+// const assertThrowsEs5 = require('assert-throws/es5') <-- for older Node
 
 (async () => {
     await assertThrows({
@@ -182,8 +174,17 @@ await assertThrows({
 })
 ```
 
+## ES5
+
+The package uses some newer language features. For your convenience, it's been
+transpiled to be compatible with Node 4. You can use the following snippet.
+
+```js
+const assertThrows = require('assert-throws/es5')
+```
+
 ---
 
-(c) [sobes.io][1] 2017
+(c) [sobes.io][1] 2018
 
 [1]: https://sobes.io
