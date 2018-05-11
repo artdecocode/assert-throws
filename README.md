@@ -185,6 +185,6 @@ const assertThrows = require('assert-throws/es5')
 
 ---
 
-(c) [sobes.io][1] 2018
+(c) [Art Deco Code][1] 2018
 
-[1]: https://sobes.io
+[1]: https://adc.sh

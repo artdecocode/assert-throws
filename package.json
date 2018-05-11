@@ -11,17 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Sobesednik/assert-throws.git"
+    "url": "git://github.com/artdecocode/assert-throws.git"
   },
   "keywords": [
     "assert-throws"
   ],
-  "author": "Anton <anton@sobes.io>",
+  "author": "Anton <anton@adc.sh>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Sobesednik/assert-throws/issues"
+    "url": "https://github.com/artdecocode/assert-throws/issues"
   },
-  "homepage": "https://github.com/Sobesednik/assert-throws#readme",
+  "homepage": "https://github.com/artdecocode/assert-throws#readme",
   "devDependencies": {
     "bestie": "1.0.0",
     "zoroaster": "0.5.3"
