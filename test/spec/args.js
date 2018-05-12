@@ -6,6 +6,7 @@ const T = {
   async 'passes arguments to a function'() {
     const test = 'test-arg'
     const message = 'context-assert-error'
+    const s = `${test} != ${message}`
     const e = erte(test, message)
     try {
       await throws({
@@ -17,9 +18,11 @@ const T = {
       })
       throw new Error('should have thrown')
     } catch ({ message: m }) {
-      if (ES5) throw new Error('Test not supported')
+      if (ES5) {
+        return equal(m, s)
+      }
       const [l, n] = m.split('\n')
-      equal(n, `${test} != ${message}`)
+      equal(n, s)
       equal(l, e)
     }
   },
