@@ -7,6 +7,7 @@
     "test": "zoroaster test/spec",
     "test-watch": "zoroaster test/spec --watch",
     "test-es5": "zoroaster es5/test/spec",
+    "example": "node example",
     "build": "bestie"
   },
   "repository": {
@@ -23,7 +24,14 @@
   },
   "homepage": "https://github.com/artdecocode/assert-throws#readme",
   "devDependencies": {
-    "bestie": "1.0.0",
-    "zoroaster": "0.5.3"
+    "@babel/cli": "7.0.0-beta.46",
+    "@babel/core": "7.0.0-beta.46",
+    "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.46",
+    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.46",
+    "@babel/register": "7.0.0-beta.46",
+    "zoroaster": "1.1.0"
+  },
+  "dependencies": {
+    "erte": "1.1.1"
   }
 }
