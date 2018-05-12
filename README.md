@@ -186,11 +186,11 @@ await throws({
 The package uses some newer language features. For your convenience, it's been
 transpiled to be compatible with Node 4. You can use the following snippet.
 
-This does have such features as highlighting the difference of messages and codes.
-
 ```js
 const throws = require('assert-throws/es5')
 ```
+
+This does have such features as highlighting the difference of messages and codes.
 
 ---
 

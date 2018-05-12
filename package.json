@@ -13,6 +13,10 @@
     "test-all": "yarn-s test test-build test-es5",
     "example": "node example"
   },
+  "files": [
+    "build",
+    "es5"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/artdecocode/assert-throws.git"
