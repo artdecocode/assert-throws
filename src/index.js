@@ -1,21 +1,32 @@
+import erte from 'erte'
+
 const equal = (a, b) => {
-  if (a != b) throw new Error(`${a} != ${b}`)
+  if (a != b) {
+    const e = erte(a, b)
+    const msg = `${a} != ${b}`
+    const er = new Error(`${e}\n${msg}`) //
+    throw er
+  }
 }
 
-function assertMessage(err, message) {
+const matchString = (errorMessage, m) => {
+  equal(errorMessage, m)
+}
+
+function assertMessage({ message: errorMessage }, message) {
   if (message instanceof RegExp) {
-    const res = message.test(err.message)
+    const res = message.test(errorMessage)
     if (!res) {
-      throw new Error(`${err.message} does not match regular expression ${message}`)
+      throw new Error(`${errorMessage} does not match regular expression ${message}`)
     }
   } else if (message) {
-    equal(err.message, message)
+    matchString(errorMessage, message)
   }
 }
 
 function assertCode(err, code) {
   if (code) {
-    equal(err.code, code)
+    matchString(err.code, code)
   }
 }
 
@@ -30,17 +41,17 @@ function assertCode(err, code) {
  * @param {object} [config.context] Context in which to execute the function,
  * global context by default
  */
-async function assertThrows(config) {
+export default async function assertThrows(config) {
   const {
     fn, message, code, args = [], context = null, error,
   } = config
-  if (typeof fn !== 'function') throw new Error('function expected')
+  if (typeof fn != 'function') throw new Error('function expected')
   const isMessageRe = message instanceof RegExp
   if (message && !isMessageRe && typeof message !== 'string') {
     throw new Error('please pass an error message as a string or regular expression')
   }
 
-  const shouldHaveThrownError = new Error('Function should have thrown')
+  const shouldHaveThrownError = new Error(`Function ${fn} should have thrown`)
   try {
     await fn.call(context, ...args)
     throw shouldHaveThrownError
@@ -56,5 +67,3 @@ async function assertThrows(config) {
     return err
   }
 }
-
-module.exports = assertThrows
