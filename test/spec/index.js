@@ -1,5 +1,5 @@
+/* global throws */
 import { equal, ok, strictEqual } from 'assert'
-import throws from '../../src'
 // import context from '../context'
 
 const T = {
