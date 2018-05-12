@@ -1,9 +1,12 @@
 ## 12 May 2018
 
+### 2.0.0
+
 - [ecma] use modules, up major version.
 - [tests] improve the test suite, `LIB_MAIN` setting to test `build` and `es5`
 - [doc] add badge
 - [doc] better examples
+- [package] specify files in `package.json`
 - [ops] use [yarn-s](https://artdeco.bz/yarn-s) to run tests against all versions
 
 ## 14 March 2018
