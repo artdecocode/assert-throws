@@ -4,6 +4,7 @@
 - [tests] improve the test suite, `LIB_MAIN` setting to test `build` and `es5`
 - [doc] add badge
 - [doc] better examples
+- [ops] use [yarn-s](https://artdeco.bz/yarn-s) to run tests against all versions
 
 ## 14 March 2018
 
