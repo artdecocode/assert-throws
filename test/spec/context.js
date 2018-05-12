@@ -1,11 +1,11 @@
-const { equal } = require('assert')
-const assertThrows = require('../..')
+import { equal } from 'assert'
+import throws from '../../src'
 
-const contextTestSuite = {
+const T = {
   async 'should pass context to a function'() {
     const test = 'hello-world'
     try {
-      await assertThrows({
+      await throws({
         async fn() {
           throw new Error(this.test)
         },
@@ -20,7 +20,7 @@ const contextTestSuite = {
   async 'should pass null context to a function by default'() {
     const test = 'test-error'
     try {
-      await assertThrows({
+      await throws({
         async fn() {
           if (this === global) {
             throw new Error(test)
@@ -35,4 +35,4 @@ const contextTestSuite = {
   },
 }
 
-module.exports = contextTestSuite
+export default T

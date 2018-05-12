@@ -1,11 +1,11 @@
-const { equal } = require('assert')
-const assertThrows = require('../..')
+import { equal } from 'assert'
+import throws from '../../src'
 
-const argsTestSuite = {
-  async 'should pass arguments to a function'() {
+const T = {
+  async 'passes arguments to a function'() {
     const test = 'test-arg'
     try {
-      await assertThrows({
+      await throws({
         async fn(test) {
           throw new Error(test)
         },
@@ -19,4 +19,4 @@ const argsTestSuite = {
   },
 }
 
-module.exports = argsTestSuite
+export default T

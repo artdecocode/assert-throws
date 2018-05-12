@@ -1,5 +1,3 @@
-function Context () {
+export async function context() {
 
 }
-
-module.exports = Context
