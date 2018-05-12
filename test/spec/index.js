@@ -1,5 +1,6 @@
 /* global throws */
 import { equal, ok, strictEqual } from 'assert'
+import erte from 'erte'
 // import context from '../context'
 
 const T = {
@@ -36,16 +37,21 @@ const T = {
     })
   },
   async 'should throw when asserting on error messages'() {
+    const test = 'test-error1'
+    const message = 'test-error'
+    const e = erte(test, message)
     try {
       await throws({
         async fn() {
-          throw new Error('test-error1')
+          throw new Error(test)
         },
-        message: 'test-error',
+        message,
       })
       throw new Error('should have thrown')
-    } catch ({ message }) {
-      equal(message, 'test-error1 != test-error')
+    } catch ({ message: m }) {
+      const [l, n] = m.split('\n')
+      equal(n, `${test} != ${message}`)
+      equal(l, e)
     }
   },
   async 'should pass when asserting on error message with regular expression'() {
@@ -103,6 +109,9 @@ const T = {
     })
   },
   async 'should throw when asserting on error code'() {
+    const test = 'ENOENT-actual'
+    const code = 'ENOENT-assert'
+    const e = erte(test, code)
     try {
       await throws({
         async fn() {
@@ -110,11 +119,13 @@ const T = {
           error.code = 'ENOENT-actual'
           throw error
         },
-        code: 'ENOENT-assert',
+        code,
       })
       throw new Error('should have thrown')
-    } catch ({ message }) {
-      equal(message, 'ENOENT-actual != ENOENT-assert')
+    } catch ({ message: m }) {
+      const [l, n] = m.split('\n')
+      equal(n, `${test} != ${code}`)
+      equal(l, e)
     }
   },
   async 'should return an error'() {

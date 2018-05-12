@@ -51,7 +51,7 @@ export default async function assertThrows(config) {
     throw new Error('please pass an error message as a string or regular expression')
   }
 
-  const shouldHaveThrownError = new Error(`Function ${fn} should have thrown`)
+  const shouldHaveThrownError = new Error('Function should have thrown')
   try {
     await fn.call(context, ...args)
     throw shouldHaveThrownError

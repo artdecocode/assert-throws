@@ -5,6 +5,7 @@
   "main": "build",
   "scripts": {
     "test": "zoroaster test/spec --babel",
+    "t": "zoroaster --babel",
     "test-watch": "zoroaster test/spec --babel --watch",
     "test-build": "LIB_MAIN=../.. zoroaster test/spec --babel",
     "test-es5": "zoroaster es5/test/spec",

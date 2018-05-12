@@ -1,20 +1,25 @@
 /* global throws */
 import { equal } from 'assert'
+import erte from 'erte'
 
 const T = {
   async 'passes arguments to a function'() {
     const test = 'test-arg'
+    const message = 'context-assert-error'
+    const e = erte(test, message)
     try {
       await throws({
         async fn(test) {
           throw new Error(test)
         },
-        message: 'context-assert-error',
+        message,
         args: [test],
       })
       throw new Error('should have thrown')
-    } catch ({ message }) {
-      equal(message, `${test} != context-assert-error`)
+    } catch ({ message: m }) {
+      const [l, n] = m.split('\n')
+      equal(n, `${test} != ${message}`)
+      equal(l, e)
     }
   },
 }
