@@ -1,10 +1,10 @@
-const assertThrows = require('../..')
-const { equal } = require('assert')
+/* global throws */
+import { equal } from 'assert'
 
-const argumentErrorsTestSuite = {
+const T = {
   async 'should throw when function is not passed'() {
     try {
-      await assertThrows({
+      await throws({
       })
     } catch ({ message }) {
       equal(message, 'function expected')
@@ -12,7 +12,7 @@ const argumentErrorsTestSuite = {
   },
   async 'should throw when function is not a function'() {
     try {
-      await assertThrows({
+      await throws({
         fn: 'test',
       })
     } catch ({ message }) {
@@ -21,7 +21,7 @@ const argumentErrorsTestSuite = {
   },
   async 'should throw when message is passed and is not string'() {
     try {
-      await assertThrows({
+      await throws({
         fn: () => { throw new Error('test') },
         message: 1,
       })
@@ -31,4 +31,4 @@ const argumentErrorsTestSuite = {
   },
 }
 
-module.exports = argumentErrorsTestSuite
+export default T

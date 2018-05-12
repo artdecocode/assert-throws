@@ -1,22 +1,28 @@
-const { equal } = require('assert')
-const assertThrows = require('../..')
+/* global ES5, throws */
+import { equal } from 'assert'
+import erte from 'erte'
 
-const argsTestSuite = {
-  async 'should pass arguments to a function'() {
+const T = {
+  async 'passes arguments to a function'() {
     const test = 'test-arg'
+    const message = 'context-assert-error'
+    const e = erte(test, message)
     try {
-      await assertThrows({
+      await throws({
         async fn(test) {
           throw new Error(test)
         },
-        message: 'context-assert-error',
+        message,
         args: [test],
       })
       throw new Error('should have thrown')
-    } catch ({ message }) {
-      equal(message, `${test} != context-assert-error`)
+    } catch ({ message: m }) {
+      if (ES5) throw new Error('Test not supported')
+      const [l, n] = m.split('\n')
+      equal(n, `${test} != ${message}`)
+      equal(l, e)
     }
   },
 }
 
-module.exports = argsTestSuite
+export default T

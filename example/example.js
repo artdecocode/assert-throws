@@ -1,16 +1,25 @@
-/* eslint-disable no-console */
-const assertThrows = require('.');
+import throws from '..'
 
 (async () => {
+  const message = 'test-error-message'
+  await throws({
+    async fn() {
+      throw new Error(message)
+    },
+    message,
+  })
+})()
+
+;(async () => {
   // ok
-  await assertThrows({
+  await throws({
     async fn() {
       throw new Error('test-error')
     },
     message: 'test-error',
   })
 
-  await assertThrows({
+  await throws({
     async fn() {
       throw new Error('test-error')
     },
@@ -18,7 +27,7 @@ const assertThrows = require('.');
 
   // not ok
   try {
-    await assertThrows({
+    await throws({
       async fn() { },
     })
   } catch (err) {
@@ -26,7 +35,7 @@ const assertThrows = require('.');
   }
 
   try {
-    await assertThrows({
+    await throws({
       async fn() {
         throw new Error('test-error')
       },
@@ -37,7 +46,7 @@ const assertThrows = require('.');
   }
 
   try {
-    await assertThrows({
+    await throws({
       async fn() {
         const error = new Error('test-error')
         error.code = 'ENOENT'
@@ -50,7 +59,7 @@ const assertThrows = require('.');
   }
 
   try {
-    await assertThrows({
+    await throws({
       async fn() {
         throw new Error('test-error')
       },

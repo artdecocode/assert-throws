@@ -1,28 +1,26 @@
-const assert = require('assert')
-const context = require('../context/')
-const assertThrows = require('../..')
+/* global ES5, throws */
+import { equal, ok, strictEqual } from 'assert'
+import erte from 'erte'
+// import context from '../context'
 
-const { equal, strictEqual } = assert
-
-const assertThrowsTestSuite = {
-  context,
-
-  'should be a function': () => {
-    assert.equal(typeof assertThrows, 'function')
+const T = {
+  // context,
+  'is a function'() {
+    equal(typeof throws, 'function')
   },
   async 'should call the error function'() {
     let called = false
-    await assertThrows({
+    await throws({
       async fn() {
         called = true
         throw new Error('test-error')
       },
     })
-    assert(called)
+    ok(called)
   },
   async 'should throw if function does not throw'() {
     try {
-      await assertThrows({
+      await throws({
         async fn() { },
       })
       throw new Error('should have thrown')
@@ -31,7 +29,7 @@ const assertThrowsTestSuite = {
     }
   },
   async 'should assert on error messages'() {
-    await assertThrows({
+    await throws({
       async fn() {
         throw new Error('test-error')
       },
@@ -39,20 +37,26 @@ const assertThrowsTestSuite = {
     })
   },
   async 'should throw when asserting on error messages'() {
+    const test = 'test-error1'
+    const message = 'test-error'
+    const e = erte(test, message)
     try {
-      await assertThrows({
+      await throws({
         async fn() {
-          throw new Error('test-error1')
+          throw new Error(test)
         },
-        message: 'test-error',
+        message,
       })
       throw new Error('should have thrown')
-    } catch ({ message }) {
-      equal(message, 'test-error1 != test-error')
+    } catch ({ message: m }) {
+      if (ES5) throw new Error('Test not supported')
+      const [l, n] = m.split('\n')
+      equal(n, `${test} != ${message}`)
+      equal(l, e)
     }
   },
   async 'should pass when asserting on error message with regular expression'() {
-    await assertThrows({
+    await throws({
       async fn() {
         throw new Error('test-error')
       },
@@ -61,7 +65,7 @@ const assertThrowsTestSuite = {
   },
   async 'should throw when asserting on error message with regular expression'() {
     try {
-      await assertThrows({
+      await throws({
         async fn() {
           throw new Error('test-error')
         },
@@ -74,7 +78,7 @@ const assertThrowsTestSuite = {
   },
   async 'should pass when asserting on error strict equality'() {
     const error = new Error('test-error')
-    await assertThrows({
+    await throws({
       async fn() {
         throw error
       },
@@ -84,7 +88,7 @@ const assertThrowsTestSuite = {
   async 'should throw when asserting on strict equality'() {
     const error = new Error('test-error')
     try {
-      await assertThrows({
+      await throws({
         async fn() {
           throw error
         },
@@ -96,7 +100,7 @@ const assertThrowsTestSuite = {
     }
   },
   async 'should assert on error code'() {
-    await assertThrows({
+    await throws({
       async fn() {
         const error = new Error('test-error')
         error.code = 'ENOENT'
@@ -106,23 +110,29 @@ const assertThrowsTestSuite = {
     })
   },
   async 'should throw when asserting on error code'() {
+    const test = 'ENOENT-actual'
+    const code = 'ENOENT-assert'
+    const e = erte(test, code)
     try {
-      await assertThrows({
+      await throws({
         async fn() {
           const error = new Error('test-error')
           error.code = 'ENOENT-actual'
           throw error
         },
-        code: 'ENOENT-assert',
+        code,
       })
       throw new Error('should have thrown')
-    } catch ({ message }) {
-      equal(message, 'ENOENT-actual != ENOENT-assert')
+    } catch ({ message: m }) {
+      if (ES5) throw new Error('Test not supported')
+      const [l, n] = m.split('\n')
+      equal(n, `${test} != ${code}`)
+      equal(l, e)
     }
   },
   async 'should return an error'() {
     const error = new Error('test-error')
-    const actual = await assertThrows({
+    const actual = await throws({
       fn() {
         throw error
       },
@@ -131,7 +141,7 @@ const assertThrowsTestSuite = {
     strictEqual(actual, error)
   },
   async 'should work with sync function'() {
-    await assertThrows({
+    await throws({
       fn() {
         throw new Error('test-error')
       },
@@ -140,4 +150,4 @@ const assertThrowsTestSuite = {
   },
 }
 
-module.exports = assertThrowsTestSuite
+export default T
