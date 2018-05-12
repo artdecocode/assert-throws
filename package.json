@@ -4,14 +4,14 @@
   "description": "A JavaScript assertion method to check if a sync or async function throws.",
   "main": "build",
   "scripts": {
-    "test": "zoroaster test/spec --babel",
+    "build": "babel src --out-dir build",
     "t": "zoroaster --babel",
+    "test": "zoroaster test/spec --babel",
     "test-watch": "zoroaster test/spec --babel --watch",
     "test-build": "LIB_MAIN=../.. zoroaster test/spec --babel",
     "test-es5": "LIB_MAIN=../../es5 zoroaster test/spec --babel",
     "test-all": "yarn-s test test-build test-es5",
-    "example": "node example",
-    "build": "babel src --out-dir build"
+    "example": "node example"
   },
   "repository": {
     "type": "git",
