@@ -42,7 +42,7 @@ import throws from '..'
       message: 'error-test',
     })
   } catch (err) {
-    console.log(2, err) // Error: test-error != error-test
+    console.log(2, err) // Error: (color-diff) test-error != error-test
   }
 
   try {
@@ -52,10 +52,10 @@ import throws from '..'
         error.code = 'ENOENT'
         throw error
       },
-      code: 'ENOENT1',
+      code: 'TNEONE',
     })
   } catch (err) {
-    console.log(3, err) // ENOENT != ENOENT1
+    console.log(3, err) // Error: (color-diff) ENOENT != TNEONE
   }
 
   try {

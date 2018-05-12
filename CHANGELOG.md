@@ -2,6 +2,8 @@
 
 - [ecma] use modules, up major version.
 - [tests] improve the test suite, `LIB_MAIN` setting to test `build` and `es5`
+- [doc] add badge
+- [doc] better examples
 
 ## 14 March 2018
 
