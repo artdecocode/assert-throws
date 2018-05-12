@@ -8,6 +8,7 @@
     "t": "zoroaster --babel",
     "test-watch": "zoroaster test/spec --babel --watch",
     "test-build": "LIB_MAIN=../.. zoroaster test/spec --babel",
+    "test-es5-lib": "LIB_MAIN=../../es5 zoroaster test/spec --babel",
     "test-es5": "zoroaster es5/test/spec",
     "example": "node example",
     "build": "babel src --out-dir build"

@@ -1,3 +1,8 @@
+## 12 May 2018
+
+- [ecma] use modules, up major version.
+- [tests] improve the test suite, `LIB_MAIN` setting to test `build` and `es5`
+
 ## 14 March 2018
 
 ### 1.3.1

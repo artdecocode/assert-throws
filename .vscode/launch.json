@@ -21,10 +21,11 @@
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "args": [
         "test/spec/_require.js",
-        "test/spec/context.js",
+        "test/spec/index.js",
         "--babel"
       ],
       "env": {
+        "LIB_MAIN": "../../es5",
         "ZOROASTER_TIMEOUT": "9999999"
       },
       "console": "integratedTerminal",
