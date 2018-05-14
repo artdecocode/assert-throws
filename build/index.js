@@ -7,6 +7,8 @@ exports.default = assertThrows;
 
 var _erte = _interopRequireDefault(require("erte"));
 
+var _erotic = _interopRequireDefault(require("erotic"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const equal = (a, b) => {
@@ -42,6 +44,8 @@ function assertCode(err, code) {
     matchString(err.code, code);
   }
 }
+
+const shouldHaveThrownError = new Error('Function should have thrown');
 /**
  * Assert that a function throws.
  * @param {object} config
@@ -54,8 +58,8 @@ function assertCode(err, code) {
  * global context by default
  */
 
-
 async function assertThrows(config) {
+  const e = (0, _erotic.default)(true);
   const {
     fn,
     message,
@@ -71,22 +75,27 @@ async function assertThrows(config) {
     throw new Error('please pass an error message as a string or regular expression');
   }
 
-  const shouldHaveThrownError = new Error('Function should have thrown');
-
   try {
     await fn.call(context, ...args);
     throw shouldHaveThrownError;
   } catch (err) {
     if (err === shouldHaveThrownError) {
-      throw err;
+      throw e(err);
     }
 
     if (error && error !== err) {
-      throw new Error(`${err} is not strict equal to ${error}.`);
+      throw e(`${err} is not strict equal to ${error}.`);
     }
 
-    assertMessage(err, message);
-    assertCode(err, code);
-    return err;
+    try {
+      assertMessage(err, message);
+      assertCode(err, code);
+    } catch ({
+      message
+    }) {
+      throw e(message);
+    }
+
+    return e(err);
   }
 }
