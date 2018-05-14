@@ -190,7 +190,7 @@ transpiled to be compatible with Node 4. You can use the following snippet.
 const throws = require('assert-throws/es5')
 ```
 
-This does have such features as highlighting the difference of messages and codes.
+This does have such features as highlighting the difference of messages and codes and `erotic` call stacks.
 
 ---
 
