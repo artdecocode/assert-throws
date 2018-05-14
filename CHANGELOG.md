@@ -1,3 +1,9 @@
+## 14 May 2018
+
+### 2.1.0
+
+- [feature] using `erotic@1.1.0` for error stacks.
+
 ## 12 May 2018
 
 ### 2.0.0
