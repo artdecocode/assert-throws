@@ -1,6 +1,6 @@
 {
   "name": "assert-throws",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A JavaScript assertion method to check if a sync or async function throws.",
   "main": "build",
   "scripts": {
