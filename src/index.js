@@ -1,4 +1,5 @@
 import erte from 'erte'
+import erotic from 'erotic'
 
 const equal = (a, b) => {
   if (a != b) {
@@ -30,6 +31,8 @@ function assertCode(err, code) {
   }
 }
 
+const shouldHaveThrownError = new Error('Function should have thrown')
+
 /**
  * Assert that a function throws.
  * @param {object} config
@@ -42,6 +45,7 @@ function assertCode(err, code) {
  * global context by default
  */
 export default async function assertThrows(config) {
+  const e = erotic(true)
   const {
     fn, message, code, args = [], context = null, error,
   } = config
@@ -51,19 +55,22 @@ export default async function assertThrows(config) {
     throw new Error('please pass an error message as a string or regular expression')
   }
 
-  const shouldHaveThrownError = new Error('Function should have thrown')
   try {
     await fn.call(context, ...args)
     throw shouldHaveThrownError
   } catch (err) {
     if (err === shouldHaveThrownError) {
-      throw err
+      throw e(err)
     }
     if (error && error !== err) {
-      throw new Error(`${err} is not strict equal to ${error}.`)
+      throw e(`${err} is not strict equal to ${error}.`)
     }
-    assertMessage(err, message)
-    assertCode(err, code)
-    return err
+    try {
+      assertMessage(err, message)
+      assertCode(err, code)
+    } catch ({ message }) {
+      throw e(message)
+    }
+    return e(err)
   }
 }

@@ -45,6 +45,7 @@
     "zoroaster": "1.1.0"
   },
   "dependencies": {
+    "erotic": "1.1.0",
     "erte": "1.1.1"
   }
 }

@@ -8,7 +8,7 @@ const T = {
   'is a function'() {
     equal(typeof throws, 'function')
   },
-  async 'should call the error function'() {
+  async 'calls the error function'() {
     let called = false
     await throws({
       async fn() {
@@ -18,7 +18,7 @@ const T = {
     })
     ok(called)
   },
-  async 'should throw if function does not throw'() {
+  async 'throws if function does not throw'() {
     try {
       await throws({
         async fn() { },
@@ -28,7 +28,7 @@ const T = {
       equal(message, 'Function should have thrown')
     }
   },
-  async 'should assert on error messages'() {
+  async 'asserts on error messages'() {
     await throws({
       async fn() {
         throw new Error('test-error')
@@ -36,7 +36,7 @@ const T = {
       message: 'test-error',
     })
   },
-  async 'should throw when asserting on error messages'() {
+  async 'throws when asserting on error messages'() {
     const test = 'test-error1'
     const message = 'test-error'
     const s = `${test} != ${message}`
@@ -58,7 +58,7 @@ const T = {
       equal(l, e)
     }
   },
-  async 'should pass when asserting on error message with regular expression'() {
+  async 'asserts on error message with regular expression'() {
     await throws({
       async fn() {
         throw new Error('test-error')
@@ -66,7 +66,7 @@ const T = {
       message: /test/,
     })
   },
-  async 'should throw when asserting on error message with regular expression'() {
+  async 'fails assert on error message with regular expression'() {
     try {
       await throws({
         async fn() {
@@ -79,7 +79,7 @@ const T = {
       equal(message, 'test-error does not match regular expression /test-error-assert/')
     }
   },
-  async 'should pass when asserting on error strict equality'() {
+  async 'asserts on error strict equality'() {
     const error = new Error('test-error')
     await throws({
       async fn() {
@@ -88,7 +88,7 @@ const T = {
       error,
     })
   },
-  async 'should throw when asserting on strict equality'() {
+  async 'fails assert on error strict equality'() {
     const error = new Error('test-error')
     try {
       await throws({
@@ -102,7 +102,7 @@ const T = {
       equal(message, 'Error: test-error is not strict equal to Error: test-error-assert.')
     }
   },
-  async 'should assert on error code'() {
+  async 'asserts on error code'() {
     await throws({
       async fn() {
         const error = new Error('test-error')
@@ -112,7 +112,7 @@ const T = {
       code: 'ENOENT',
     })
   },
-  async 'should throw when asserting on error code'() {
+  async 'fails assert on error code'() {
     const test = 'ENOENT-actual'
     const code = 'ENOENT-assert'
     const s = `${test} != ${code}`
@@ -136,7 +136,7 @@ const T = {
       equal(l, e)
     }
   },
-  async 'should return an error'() {
+  async 'returns an error'() {
     const error = new Error('test-error')
     const actual = await throws({
       fn() {
@@ -146,7 +146,7 @@ const T = {
     })
     strictEqual(actual, error)
   },
-  async 'should work with sync function'() {
+  async 'works with a sync function'() {
     await throws({
       fn() {
         throw new Error('test-error')
