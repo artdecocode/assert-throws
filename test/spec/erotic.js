@@ -1,74 +1,44 @@
 import { ok } from 'assert'
 import throws from '../../src'
+import Context from '../context'
 
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  async 'error message'() {
-    try {
-      await throws({
-        async fn() {
-          await new Promise((_, r) => {
-            setTimeout(() => {
-              r(new Error('test error'))
-            })
-          })
-        },
-        message: 'test',
-      })
-      throw new Error('had to throw')
-    } catch ({ stack }) {
-      const [,,l] = stack.split('\n', 3)
-      ok(/at error message/.test(l))
-    }
+  context: Context,
+  async 'error message'({ assertThrows, fn }) {
+    await assertThrows(throws, {
+      fn,
+      message: 'expected-message',
+    },
+    ({ stack }) => {
+      ok(/!=/.test(stack))
+      ok(/at error message/.test(stack))
+    })
   },
-  async 'error code'() {
-    try {
-      await throws({
-        async fn() {
-          await new Promise((_, r) => {
-            setTimeout(() => {
-              const e = new Error('test error')
-              e.code = 'tset'
-              r(e)
-            })
-          })
-        },
-        code: 'test',
-      })
-      throw new Error('had to throw')
-    } catch ({ stack }) {
-      const [,,l] = stack.split('\n', 3)
-      ok(/at error code/.test(l))
-    }
+  async 'error code'({ assertThrows, fn }) {
+    await assertThrows(throws, {
+      fn,
+      code: /expected-code/,
+    },
+    ({ stack }) => {
+      ok(/does not match regular expression/.test(stack))
+      ok(/at error code/.test(stack))
+    })
   },
-  async 'error strict equality'() {
-    const error = new Error('test error')
-    try {
-      await throws({
-        async fn() {
-          await new Promise((_, r) => {
-            setTimeout(() => {
-              const e = new Error('test')
-              r(e)
-            })
-          })
-        },
-        error,
-      })
-      throw new Error('had to throw')
-    } catch ({ stack }) {
-      const [,l] = stack.split('\n', 2)
-      ok(/at error strict equality/.test(l))
-    }
+  async 'error strict equality'({ assertThrows, fn }) {
+    await assertThrows(throws, {
+      fn,
+      error: new Error('expected-error'),
+    },
+    ({ stack }) => {
+      ok(/is not strict equal to/.test(stack))
+      ok(/at error strict equality/.test(stack))
+    })
   },
-  async 'no error'() {
-    try {
-      await throws({
-        fn() { },
-      })
-    } catch ({ stack }) {
-      const [,l] = stack.split('\n', 2)
-      ok(/at no error/.test(l))
-    }
+  async 'should have thrown'({ assertThrows }) {
+    await assertThrows(throws, { fn() {} }, ({ stack }) => {
+      ok(/at should have thrown/.test(stack))
+    })
   },
 }
 

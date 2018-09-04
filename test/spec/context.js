@@ -1,29 +1,46 @@
+import { equal } from 'zoroaster/assert'
 import throws from '../../src'
+import Context from '../context'
 
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  async 'passes context to the function'() {
-    const message = 'hello-world'
+  context: Context,
+  async 'passes context to the function'({ message }) {
     const context = { test: message }
-    await throws({
-      async fn() {
-        if (this === context) {
-          throw new Error(this.test)
-        }
+    let c
+    const err = await throws({
+      fn() {
+        c = this
+        throw new Error(this.test)
       },
-      message,
       context,
     })
+    equal(c, context)
+    equal(err.message, message)
   },
-  async 'passes null context to the function by default'() {
-    const message = 'test-error'
+  async 'uses global context by default'({ message }) {
+    let c
+    const expected = this
     await throws({
-      async fn() {
-        if (this === null) {
-          throw new Error(message)
-        }
+      fn() {
+        c = this
+        throw new Error(message)
       },
-      message,
     })
+    equal(c, expected)
+  },
+  async 'can use bound context'({ message }) {
+    let c
+    const expected = {}
+    function fun() {
+      c = this
+      throw new Error(message)
+    }
+    const fn = fun.bind(expected)
+    await throws({
+      fn,
+    })
+    equal(c, expected)
   },
 }
 

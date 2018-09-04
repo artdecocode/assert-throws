@@ -1,33 +1,24 @@
 import { equal } from 'assert'
 import throws from '../../src'
+import Context from '../context'
 
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  async 'should throw when function is not passed'() {
-    try {
-      await throws({
-      })
-    } catch ({ message }) {
-      equal(message, 'function expected')
-    }
+  context: Context,
+  async 'throws when config is not passed'({ assertThrows }) {
+    await assertThrows(throws, undefined, ({ message }) => {
+      equal(message, 'Config expected.')
+    })
   },
-  async 'should throw when function is not a function'() {
-    try {
-      await throws({
-        fn: 'test',
-      })
-    } catch ({ message }) {
-      equal(message, 'function expected')
-    }
+  async 'throws when function is not passed'({ assertThrows }) {
+    await assertThrows(throws, {}, ({ message }) => {
+      equal(message, 'Function expected.')
+    })
   },
-  async 'should throw when message is passed and is not string'() {
-    try {
-      await throws({
-        fn: () => { throw new Error('test') },
-        message: 1,
-      })
-    } catch ({ message }) {
-      equal(message, 'please pass an error message as a string or regular expression')
-    }
+  async 'throws when function is not a function'({ assertThrows }) {
+    await assertThrows(throws, 'test', ({ message }) => {
+      equal(message, 'Function expected.')
+    })
   },
 }
 

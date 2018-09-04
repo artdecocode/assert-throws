@@ -1,27 +1,28 @@
 import { equal } from 'assert'
-import erte from 'erte'
 import throws from '../../src'
+import Context from '../context'
 
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  async 'passes arguments to a function'() {
-    const test = 'test-arg'
-    const message = 'context-assert-error'
-    const s = `${test} != ${message}`
-    const e = erte(test, message)
-    try {
-      await throws({
-        async fn(test) {
-          throw new Error(test)
-        },
-        message,
-        args: [test],
-      })
-      throw new Error('should have thrown')
-    } catch ({ message: m }) {
-      const [l, n] = m.split('\n')
-      equal(n, s)
-      equal(l, e)
-    }
+  context: Context,
+  async 'passes an argument to a function'({ message }) {
+    const err = await throws({
+      fn(arg) {
+        throw new Error(arg)
+      },
+      args: message,
+    })
+    equal(err.message, message)
+  },
+  async 'passes arguments to a function'({ message }) {
+    const err = await throws({
+      fn(arg, arg2) {
+        const m = `${arg} ${arg2}`
+        throw new Error(m)
+      },
+      args: [message, 'test'],
+    })
+    equal(err.message, `${message} test`)
   },
 }
 
