@@ -8,9 +8,9 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Example",
-      "program": "${workspaceFolder}/examples/index.js",
+      "program": "${workspaceFolder}/example/index.js",
       "args": [
-        "example/example"
+        "example/args"
       ],
       "console": "integratedTerminal",
     },

@@ -10,7 +10,7 @@
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
     "d": "NODE_DEBUG=doc doc src/index.js -g",
     "b": "alamode src -o build",
-    "build": "yarn-s doc b",
+    "build": "yarn-s doc b d",
     "e": "node example",
     "example/message": "yarn e example/message"
   },
