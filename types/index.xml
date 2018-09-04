@@ -1,25 +1,26 @@
 <types>
+  <type name="Assertion" desc="An assertion to perform." type="string|RegExp|function" />
   <type name="Config" desc="Parameters to the `assert-throws` method.">
     <prop name="fn" type="function">
       Function to test, either sync or async.
     </prop>
-    <prop opt name="args" type="any[]">
+    <prop opt name="args" type="*|*[]">
       Arguments to pass to the function.
     </prop>
-    <prop opt name="message" type="string|RegExp">
+    <prop opt name="context" type="any">
+      The context in which to execute the function. Global context will be set by default.
+    </prop>
+    <prop opt name="message" type="Assertion">
       Message to test against.
     </prop>
-    <prop opt name="code" type="string|RegExp">
+    <prop opt name="code" type="Assertion">
       Code to test against.
     </prop>
-    <prop opt name="stack" type="string|RegExp">
+    <prop opt name="stack" type="Assertion">
       Stack to test against.
     </prop>
     <prop opt name="error" type="Error">
       An error to perform strict comparison against.
-    </prop>
-    <prop opt name="context" type="any" default="null">
-      The context in which to execute the function.
     </prop>
   </type>
 </types>

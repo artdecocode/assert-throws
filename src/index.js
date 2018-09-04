@@ -10,7 +10,7 @@ const equal = (a, b) => {
   }
 }
 
-const matchString = (errorMessage, m) => {
+const assertString = (errorMessage, m) => {
   equal(errorMessage, m)
 }
 
@@ -21,42 +21,30 @@ const assertRe = (actual, re) => {
   }
 }
 
-function assertMessage({ message: errorMessage }, message) {
-  if (message instanceof RegExp) {
-    assertRe(errorMessage, message)
-  } else if (message) {
-    matchString(errorMessage, message)
-  }
+const assertFn = async (actual, fn) => {
+  await fn(actual)
 }
 
-function assertCode({ code: errorCode }, code) {
-  if (code instanceof RegExp) {
-    assertRe(errorCode, code)
-  } else if (code) {
-    matchString(errorCode, code)
+const assert = async (prop, assertion) => {
+  if (assertion instanceof RegExp) {
+    assertRe(prop, assertion)
+  } else if (typeof assertion == 'function') {
+    await assertFn(prop, assertion)
+  } else if (assertion) {
+    assertString(prop, assertion)
   }
 }
-
-function assertStack({ stack: errorStack }, stack) {
-  if (stack instanceof RegExp) {
-    assertRe(errorStack, stack)
-  } else if (stack) {
-    matchString(errorStack, stack)
-  }
-}
-
-const shouldHaveThrownError = new Error('Function should have thrown.')
 
 /**
- * Assert that a function throws and check its properties.
+ * Assert that a function throws and check the thrown error properties.
  * @param {Config} config Parameters to the `assert-throws` method.
  * @param {function} config.fn Function to test, either sync or async.
- * @param {any[]} [config.args] Arguments to pass to the function.
- * @param {string|RegExp} [config.message] Message to test against.
- * @param {string|RegExp} [config.code] Code to test against.
- * @param {string|RegExp} [config.stack] Stack to test against.
+ * @param {*|*[]} [config.args] Arguments to pass to the function.
+ * @param {any} [config.context] The context in which to execute the function. Global context will be set by default.
+ * @param {Assertion} [config.message] Message to test against.
+ * @param {Assertion} [config.code] Code to test against.
+ * @param {Assertion} [config.stack] Stack to test against.
  * @param {Error} [config.error] An error to perform strict comparison against.
- * @param {any} [config.context="null"] The context in which to execute the function. Default `null`.
  * @example
  *
  * import throws from 'assert-throws'
@@ -65,50 +53,69 @@ const shouldHaveThrownError = new Error('Function should have thrown.')
  * await throws({
  *  fn: method,
  *  args: ['test', true],
- *  message: /An error occurred:/,
- *  code: 'ENOTEST',
+ *  message: /An error occurred:/, // regex
+ *  code: 'ENOTEST',               // string
+ *  stack(stack) {                 // function
+ *    equal(stack.length, 2)
+ *  }
  * })
  */
 export default async function assertThrows(config) {
+  if (!config) throw new Error('Config expected.')
   const e = erotic(true)
   const {
-    fn, message, code, stack, args = [], context = null, error,
+    fn, args = [], context, error, ...props
   } = config
-  if (typeof fn != 'function') throw new Error('function expected')
-  const isMessageRe = message instanceof RegExp
-  if (message && !isMessageRe && typeof message !== 'string') {
-    throw new Error('please pass an error message as a string or regular expression')
-  }
+  if (typeof fn != 'function') throw new Error('Function expected.')
+  const arg = Array.isArray(args) ? args : [args]
 
   try {
-    await fn.call(context, ...args)
+    const thrownError = await wrap(fn, context, arg, error, props)
+    return thrownError
+  } catch (err) {
+    const er = e(err)
+    throw er
+  }
+}
+
+const wrap = async (fn, context, args, error, props) => {
+  const shouldHaveThrownError = new Error()
+  try {
+    if (context) {
+      await fn.call(context, ...args)
+    } else {
+      await fn(...args)
+    }
     throw shouldHaveThrownError
   } catch (err) {
     if (err === shouldHaveThrownError) {
-      throw e(err)
+      throw new Error('Function should have thrown.')
     }
     if (error && error !== err) {
-      throw e(`${err} is not strict equal to ${error}.`)
+      throw new Error(`${err} is not strict equal to ${error}.`)
     }
-    try {
-      assertMessage(err, message)
-      assertCode(err, code)
-      assertStack(err, stack)
-    } catch ({ message }) {
-      throw e(message)
-    }
-    return e(err)
+
+    await Object.keys(props).reduce(async (acc, k) => {
+      await acc
+      const assertion = props[k]
+      const actual = err[k]
+      await assert(actual, assertion)
+    }, {})
+
+    return err
   }
 }
 
 /* documentary types/index.xml */
 /**
+ * @typedef {string|RegExp|function} Assertion An assertion to perform.
+ *
  * @typedef {Object} Config Parameters to the `assert-throws` method.
  * @prop {function} fn Function to test, either sync or async.
- * @prop {any[]} [args] Arguments to pass to the function.
- * @prop {string|RegExp} [message] Message to test against.
- * @prop {string|RegExp} [code] Code to test against.
- * @prop {string|RegExp} [stack] Stack to test against.
+ * @prop {*|*[]} [args] Arguments to pass to the function.
+ * @prop {any} [context] The context in which to execute the function. Global context will be set by default.
+ * @prop {Assertion} [message] Message to test against.
+ * @prop {Assertion} [code] Code to test against.
+ * @prop {Assertion} [stack] Stack to test against.
  * @prop {Error} [error] An error to perform strict comparison against.
- * @prop {any} [context="null"] The context in which to execute the function. Default `null`.
  */
