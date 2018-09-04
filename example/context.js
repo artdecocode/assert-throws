@@ -1,19 +1,21 @@
 import throws from '../src'
 
-(async function example() {
-  function fn () {
-    if (this.shouldThrow) throw new Error('An error occurred.')
-  }
-  try {
-    await throws({
-      fn,
-      context: { shouldThrow: true },
-    }) // pass
+async function testThrows() {
+  if (this.shouldThrow) throw new Error('An error occurred.')
+}
 
+(async function example() {
+  try {
+    // 1. TEST a function with context (pass).
     await throws({
-      fn,
-      context: {},
-    }) // fail
+      fn: testThrows,
+      context: { shouldThrow: true },
+    })
+
+    // 2.  TEST a function with a context (fail).
+    await throws({
+      fn: testThrows,
+    })
   } catch ({ stack }) {
     console.log(stack)
   }

@@ -1,11 +1,13 @@
 import throws from '../src'
 
+const testThrows = async () => {
+  await new Promise(r => setTimeout(r, 100))
+}
+
 (async function example() {
   try {
     await throws({
-      async fn() {
-        // this function does not throw
-      },
+      fn: testThrows,
     })
   } catch ({ stack }) {
     console.log(stack)

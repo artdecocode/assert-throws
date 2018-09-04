@@ -1,24 +1,22 @@
 import throws from '../src'
 
-const error = new Error('test-error')
-
 async function testThrows() {
   await new Promise(r => setTimeout(r, 100))
-  throw error
+  throw new Error('test-error')
 }
 
 (async function example() {
   try {
-    // 1. TEST that a function throws the correct error (pass).
+    // 1. TEST that a function throws with a string (pass).
     await throws({
       fn: testThrows,
-      error,
+      message: 'test-error',
     })
 
-    // 1. TEST that a function throws the correct error (fail).
+    // 2. TEST that a function throws with a string (fail).
     await throws({
       fn: testThrows,
-      error: new Error('Another error.'),
+      message: 'wrong-error',
     })
   } catch ({ stack }) {
     console.log(stack)
