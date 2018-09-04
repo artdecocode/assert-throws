@@ -26,6 +26,13 @@ const T = {
       equal(message, 'Function should have thrown.')
     })
   },
+  async 'throws if function does not throw with name'({ assertThrows }) {
+    await assertThrows(throws, {
+      fn: async function test() {},
+    }, ({ message }) => {
+      equal(message, 'Function test should have thrown.')
+    })
+  },
   async 'asserts on error strict equality'() {
     const error = new Error('test-error')
     await throws({

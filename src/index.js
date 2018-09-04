@@ -39,11 +39,12 @@ const assert = async (prop, assertion) => {
  * Assert that a function throws and check the thrown error properties.
  * @param {Config} config Parameters to the `assert-throws` method.
  * @param {function} config.fn Function to test, either sync or async.
- * @param {*|*[]} [config.args] Arguments to pass to the function.
+ * @param {any|any[]} [config.args] Arguments to pass to the function.
  * @param {any} [config.context] The context in which to execute the function. Global context will be set by default.
- * @param {Assertion} [config.message] Message to test against.
- * @param {Assertion} [config.code] Code to test against.
- * @param {Assertion} [config.stack] Stack to test against.
+ * @param {Assertion} [config.message] A string, regex, or function to test the message.
+ * @param {Assertion} [config.code] A string, regex, or function to test the code.
+ * @param {Assertion} [config.stack] A string, regex, or function to test the stack.
+ * @param {Assertion} [config.prop] A string, regex, or function to test any other property of the error.
  * @param {Error} [config.error] An error to perform strict comparison against.
  * @example
  *
@@ -89,7 +90,8 @@ const wrap = async (fn, context, args, error, props) => {
     throw shouldHaveThrownError
   } catch (err) {
     if (err === shouldHaveThrownError) {
-      throw new Error('Function should have thrown.')
+      const n = fn.name && fn.name !== 'fn' ? `${fn.name} ` : ''
+      throw new Error(`Function ${n}should have thrown.`)
     }
     if (error && error !== err) {
       throw new Error(`${err} is not strict equal to ${error}.`)
@@ -112,10 +114,11 @@ const wrap = async (fn, context, args, error, props) => {
  *
  * @typedef {Object} Config Parameters to the `assert-throws` method.
  * @prop {function} fn Function to test, either sync or async.
- * @prop {*|*[]} [args] Arguments to pass to the function.
+ * @prop {any|any[]} [args] Arguments to pass to the function.
  * @prop {any} [context] The context in which to execute the function. Global context will be set by default.
- * @prop {Assertion} [message] Message to test against.
- * @prop {Assertion} [code] Code to test against.
- * @prop {Assertion} [stack] Stack to test against.
+ * @prop {Assertion} [message] A string, regex, or function to test the message.
+ * @prop {Assertion} [code] A string, regex, or function to test the code.
+ * @prop {Assertion} [stack] A string, regex, or function to test the stack.
+ * @prop {Assertion} [prop] A string, regex, or function to test any other property of the error.
  * @prop {Error} [error] An error to perform strict comparison against.
  */
