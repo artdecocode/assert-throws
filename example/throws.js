@@ -1,6 +1,6 @@
 import throws from '../src'
 
-(async () => {
+(async function example() {
   try {
     await throws({
       async fn() {

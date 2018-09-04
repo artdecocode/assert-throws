@@ -1,20 +1,20 @@
 import throws from '../src'
 
 (async function example() {
-  const message = 'test-error-message'
+  const error = new Error('test-error')
   try {
     await throws({
       async fn() {
-        throw new Error(message)
+        throw error
       },
-      message: /test/,
+      error,
     }) // pass
 
     await throws({
       async fn() {
-        throw new Error(message)
+        throw new Error('example-error')
       },
-      message: /example/,
+      error,
     }) // fail
   } catch ({ stack }) {
     console.log(stack)

@@ -37,6 +37,14 @@ function assertCode({ code: errorCode }, code) {
   }
 }
 
+function assertStack({ stack: errorStack }, stack) {
+  if (stack instanceof RegExp) {
+    assertRe(errorStack, stack)
+  } else if (stack) {
+    matchString(errorStack, stack)
+  }
+}
+
 const shouldHaveThrownError = new Error('Function should have thrown')
 
 /**
@@ -53,7 +61,7 @@ const shouldHaveThrownError = new Error('Function should have thrown')
 export default async function assertThrows(config) {
   const e = erotic(true)
   const {
-    fn, message, code, args = [], context = null, error,
+    fn, message, code, stack, args = [], context = null, error,
   } = config
   if (typeof fn != 'function') throw new Error('function expected')
   const isMessageRe = message instanceof RegExp
@@ -74,6 +82,7 @@ export default async function assertThrows(config) {
     try {
       assertMessage(err, message)
       assertCode(err, code)
+      assertStack(err, stack)
     } catch ({ message }) {
       throw e(message)
     }

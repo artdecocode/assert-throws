@@ -1,6 +1,6 @@
 import throws from '../src'
 
-(async () => {
+(async function example() {
   const message = 'test-error-message'
   try {
     await throws({
