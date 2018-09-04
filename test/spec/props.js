@@ -1,5 +1,4 @@
-import { equal, ok, strictEqual, AssertionError } from 'assert'
-import erte from 'erte'
+import { equal, ok } from 'assert'
 import throws from '../../src'
 import Context from '../context'
 

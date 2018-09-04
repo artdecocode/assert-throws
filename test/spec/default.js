@@ -1,4 +1,5 @@
-import { equal, ok, strictEqual } from 'assert'
+import { equal, ok } from 'zoroaster/assert'
+import { strictEqual } from 'assert'
 import throws from '../../src'
 import Context from '../context'
 

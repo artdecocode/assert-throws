@@ -1,4 +1,4 @@
-import { ok } from 'assert'
+import { ok } from 'zoroaster/assert'
 import throws from '../../src'
 import Context from '../context'
 
