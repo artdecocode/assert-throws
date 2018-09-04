@@ -4,13 +4,12 @@
   "description": "A JavaScript assertion method to check if a sync or async function throws.",
   "main": "build",
   "scripts": {
-    "build": "babel src --out-dir build",
-    "t": "zoroaster --babel",
-    "test": "zoroaster test/spec --babel",
-    "test-watch": "zoroaster test/spec --babel --watch",
-    "test-build": "LIB_MAIN=../.. zoroaster test/spec --babel",
-    "test-es5": "LIB_MAIN=../../es5 zoroaster test/spec --babel",
-    "test-all": "yarn-s test test-build test-es5",
+    "t": "zoroaster -a",
+    "test": "yarn t test/spec",
+    "test-build": "ALAMODE_ENV=test-build zoroaster test/spec --babel",
+    "doc": "NODE_DEBUG=doc doc documentary -o README.md",
+    "b": "alamode src --out-dir build",
+    "build": "yarn-s doc b",
     "example": "node example"
   },
   "files": [
@@ -22,11 +21,13 @@
     "url": "git://github.com/artdecocode/assert-throws.git"
   },
   "keywords": [
+    "assert-throws",
     "assertion",
     "throws",
     "throw",
     "error",
-    "assert-throws"
+    "try",
+    "catch"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
@@ -35,17 +36,14 @@
   },
   "homepage": "https://github.com/artdecocode/assert-throws#readme",
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.46",
-    "@babel/core": "7.0.0-beta.46",
-    "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.46",
-    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.46",
-    "@babel/register": "7.0.0-beta.46",
-    "snapshot-context": "1.1.2",
+    "alamode": "1.4.0",
+    "documentary": "1.11.0",
+    "snapshot-context": "2.0.4",
     "yarn-s": "1.1.0",
-    "zoroaster": "1.1.0"
+    "zoroaster": "3.0.0"
   },
   "dependencies": {
-    "erotic": "1.1.0",
-    "erte": "1.1.1"
+    "erotic": "2.0.0",
+    "erte": "1.1.4"
   }
 }
