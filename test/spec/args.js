@@ -1,6 +1,6 @@
-/* global ES5, throws */
 import { equal } from 'assert'
 import erte from 'erte'
+import throws from '../../src'
 
 const T = {
   async 'passes arguments to a function'() {
@@ -18,9 +18,6 @@ const T = {
       })
       throw new Error('should have thrown')
     } catch ({ message: m }) {
-      if (ES5) {
-        return equal(m, s)
-      }
       const [l, n] = m.split('\n')
       equal(n, s)
       equal(l, e)

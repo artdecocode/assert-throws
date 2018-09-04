@@ -1,5 +1,5 @@
-/* global throws */
 import { equal } from 'assert'
+import throws from '../../src'
 
 const T = {
   async 'should throw when function is not passed'() {

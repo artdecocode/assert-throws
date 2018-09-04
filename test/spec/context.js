@@ -1,4 +1,4 @@
-/* global throws */
+import throws from '../../src'
 
 const T = {
   async 'passes context to the function'() {

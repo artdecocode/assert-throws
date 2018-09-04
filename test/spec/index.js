@@ -1,10 +1,8 @@
-/* global ES5, throws */
 import { equal, ok, strictEqual } from 'assert'
 import erte from 'erte'
-// import context from '../context'
+import throws from '../../src'
 
 const T = {
-  // context,
   'is a function'() {
     equal(typeof throws, 'function')
   },

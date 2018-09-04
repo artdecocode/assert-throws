@@ -1,10 +1,7 @@
-/* global ES5, throws */
-const { ok } = require('assert')
+import { ok } from 'assert'
+import throws from '../../src'
 
 const T = {
-  context() {
-    if (ES5) throw new Error('This feature is not supported on ES5')
-  },
   async 'error message'() {
     try {
       await throws({

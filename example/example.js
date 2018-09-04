@@ -1,4 +1,4 @@
-import throws from '..'
+import throws from '../src'
 
 (async () => {
   const message = 'test-error-message'
