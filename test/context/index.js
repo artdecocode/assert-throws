@@ -33,7 +33,11 @@ export default class Context {
   get error() {
     const e = new Error(this.message)
     e.code = this.code
+    e.actual = this.actual
     return e
+  }
+  get actual() {
+    return 1
   }
   get code() {
     return 'ENOTEST'

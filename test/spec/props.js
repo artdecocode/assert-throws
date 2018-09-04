@@ -64,6 +64,37 @@ const strings = {
 }
 
 /** @type {Object.<string, (c: Context)>} */
+const numbers = {
+  context: Context,
+  async 'asserts on error actual (pass)'({ actual, fn }) {
+    let called
+    await throws({
+      async fn(...args) {
+        called = true
+        await fn(...args)
+      },
+      actual,
+    })
+    ok(called)
+  },
+  async 'asserts on error actual (fail)'({ assertThrows, fn, actual }) {
+    let called
+    const expectedActual = -1
+    await assertThrows(throws, {
+      async fn(...args) {
+        called = true
+        await fn(...args)
+      },
+      actual: expectedActual,
+    }, ({ message }) => {
+      const m = `${actual} != ${expectedActual}`
+      ok(message.includes(m))
+    })
+    ok(called)
+  },
+}
+
+/** @type {Object.<string, (c: Context)>} */
 const regexps = {
   context: Context,
   async 'asserts on error message (pass)'({ messageRegExp, fn }) {
@@ -274,4 +305,4 @@ const asyncFunctions = {
   },
 }
 
-export default { strings, regexps, functions, 'async functions': asyncFunctions }
+export default { strings, regexps, numbers, functions, 'async functions': asyncFunctions }

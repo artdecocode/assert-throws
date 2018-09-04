@@ -3,7 +3,7 @@ import erotic from 'erotic'
 
 const equal = (a, b) => {
   if (a != b) {
-    const e = erte(a, b)
+    const e = erte(`${a}`, `${b}`)
     const msg = `${a} != ${b}`
     const er = new Error(`${e}\n${msg}`) //
     throw er
