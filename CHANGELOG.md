@@ -1,3 +1,12 @@
+## 4 September 2018
+
+### 3.0.0
+
+- [feature] Check against `stack`, and `code` using regex.
+- [build] Remove `ES5` (breaking).
+- [doc] Document w/ `documentary`.
+- [build] Build w/ [`alamode`](https://alamode.cc).
+
 ## 14 May 2018
 
 ### 2.1.0
