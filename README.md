@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/assert-throws.svg)](https://npmjs.org/package/assert-throws)
 
-`assert-throws` is an assertion method for Node.js which checks if a synchronous or asynchronous function throws. It can also compare properties of the error (such as `message`, `code` and `stack`) with expected ones using string matching or regular expressions.
+`assert-throws` is an assertion method for Node.js which checks if a synchronous or asynchronous function throws. It can also compare properties of the error (such as `message`, `code` and `stack` and any other) with expected ones using string strict equality, a regular expression, or a function.
 
 ```
 yarn add -E assert-throws
@@ -12,7 +12,9 @@ yarn add -E assert-throws
 
 - [Table of Contents](#table-of-contents)
 - [API](#api)
-  * [`async throws(fn: function, args?: any[], message?: string|RegExp, code?: string, error?: Error, context?: any): Error`](#async-throwsfn-functionargs-anymessage-stringregexpcode-stringerror-errorcontext-any-error)
+  * [`async throws(config: Config): Error`](#async-throwsconfig-fn-functionargs-anyanycontext-anymessage-assertioncode-assertionerror-assertionprop-assertion-error)
+    * [`Assertion`](#assertion)
+    * [`Config`](#config)
   * [Arguments](#arguments)
   * [Context](#context)
   * [Message](#message)
@@ -36,9 +38,24 @@ The package exports the default `throws` function.
 import throws from 'assert-throws'
 ```
 
-### `async throws(`<br/>&nbsp;&nbsp;`fn: function,`<br/>&nbsp;&nbsp;`args?: any[],`<br/>&nbsp;&nbsp;`message?: string|RegExp,`<br/>&nbsp;&nbsp;`code?: string,`<br/>&nbsp;&nbsp;`error?: Error,`<br/>&nbsp;&nbsp;`context?: any,`<br/>`): Error`
+### `async throws(`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`fn: function,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`args?: any|any[],`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`context?: any,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`message?: Assertion,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`code?: Assertion,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`error?: Assertion,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`[prop]?: Assertion,`<br/>&nbsp;&nbsp;`},`<br/>`): Error`
 
-Checks if a function throws an error. As a minimum, the function should be passed in the `fn` property.
+Checks if a function throws an error. As a minimum, the function should be passed in the `fn` property. If the assertion passes, the method returns the error which was thrown by the tested function.
+
+`string|RegExp|function` __<a name="assertion">`Assertion`</a>__: An assertion to perform.
+
+__<a name="config">`Config`</a>__: Parameters to the `assert-throws` method.
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| __fn*__ | _function_ | Function to test, either sync or async. | - |
+| args | _any\|any[]_ | Arguments to pass to the function. | - |
+| context | _any_ | The context in which to execute the function. Global context will be set by default. | - |
+| message | [_Assertion_](#assertion) | A string, regex, or function to test the message. | - |
+| code | [_Assertion_](#assertion) | A string, regex, or function to test the code. | - |
+| stack | [_Assertion_](#assertion) | A string, regex, or function to test the stack. | - |
+| prop | [_Assertion_](#assertion) | A string, regex, or function to test any other property of the error. | - |
+| error | _Error_ | An error to perform strict comparison against. | - |
 
 ```js
 import throws from 'assert-throws'
@@ -57,7 +74,7 @@ import throws from 'assert-throws'
 ```
 
 ```
-Error: Function should have thrown
+Error: Function should have thrown.
     at example (/Users/zavr/adc/assert-throws/example/throws-fail.js:5:11)
     at Object.<anonymous> (/Users/zavr/adc/assert-throws/example/throws-fail.js:13:3)
 ```
@@ -67,31 +84,36 @@ Error: Function should have thrown
 To pass arguments to the tested function, the `args` properties can be used.
 
 ```js
-import throws from 'assert-throws'
+const fn = async (message, shouldThrow = true) => {
+  if (shouldThrow) throw new Error(message)
+}
 
-(async function example() {
-  const fn = async (shouldThrow) => {
-    if (shouldThrow) throw new Error('An error occurred.')
-  }
-  try {
-    await throws({
-      fn,
-      args: [true],
-    }) // pass
+try {
+  // 1. TEST that a function with arguments throws (pass).
+  await throws({
+    fn,
+    args: ['An argument in the array'],
+  })
 
-    await throws({
-      fn,
-      args: [],
-    }) // fail
-  } catch ({ stack }) {
-    console.log(stack)
-  }
-})()
+  // 2. TEST that a function with an argument throws (pass).
+  await throws({
+    fn,
+    args: 'A single argument',
+  })
+
+  // 3. TEST that a function with arguments throws (fail).
+  await throws({
+    fn,
+    args: ['An error occurred.', false],
+  })
+} catch ({ stack }) {
+  console.log(stack)
+}
 ```
 
 ```
-Error: Function should have thrown
-    at example (/Users/zavr/adc/assert-throws/example/args.js:13:11)
+Error: Function should have thrown.
+    at example (/Users/zavr/adc/assert-throws/example/args.js:23:11)
     at <anonymous>
 ```
 
@@ -123,7 +145,7 @@ import throws from 'assert-throws'
 ```
 
 ```
-Error: Function should have thrown
+Error: Function should have thrown.
     at example (/Users/zavr/adc/assert-throws/example/context.js:13:11)
     at <anonymous>
 ```

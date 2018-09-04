@@ -1,16 +1,21 @@
 
 ```### async throws => Error
 [
-  ["fn", "function"],
-  ["args?", "any[]"],
-  ["message?", "string|RegExp"],
-  ["code?", "string"],
-  ["error?", "Error"],
-  ["context?", "any"]
+  ["config", {
+    "fn": ["function"],
+    "args?": ["any|any[]"],
+    "context?": ["any"],
+    "message?": ["Assertion"],
+    "code?": ["Assertion"],
+    "error?": ["Assertion"],
+    "[prop]?": ["Assertion"]
+  }, "Config"]
 ]
 ```
 
-Checks if a function throws an error. As a minimum, the function should be passed in the `fn` property.
+Checks if a function throws an error. As a minimum, the function should be passed in the `fn` property. If the assertion passes, the method returns the error which was thrown by the tested function.
+
+%TYPEDEF types/index.xml%
 
 %EXAMPLE: example/throws-fail.js, ../src => assert-throws%
 
