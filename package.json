@@ -41,7 +41,7 @@
     "documentary": "1.11.0",
     "snapshot-context": "2.0.4",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.0.0"
+    "zoroaster": "3.0.2"
   },
   "dependencies": {
     "erotic": "2.0.0",
