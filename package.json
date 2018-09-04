@@ -1,20 +1,20 @@
 {
   "name": "assert-throws",
   "version": "2.1.0",
-  "description": "A JavaScript assertion method to check if a sync or async function throws.",
+  "description": "An assertion method to check if a sync or async function throws and assert on error properties.",
   "main": "build",
   "scripts": {
     "t": "zoroaster -a",
     "test": "yarn t test/spec",
-    "test-build": "ALAMODE_ENV=test-build zoroaster test/spec --babel",
+    "test-build": "ALAMODE_ENV=test-build yarn test",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
     "b": "alamode src --out-dir build",
     "build": "yarn-s doc b",
-    "example": "node example"
+    "e": "node example",
+    "example/message": "yarn e example/message"
   },
   "files": [
-    "build",
-    "es5"
+    "build"
   ],
   "repository": {
     "type": "git",
