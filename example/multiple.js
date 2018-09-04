@@ -1,3 +1,4 @@
+import cleanStack from 'clean-stack'
 import throws from '../src'
 
 async function testThrows() {
@@ -6,6 +7,7 @@ async function testThrows() {
   err.actual = -1
   err.expected = Infinity
   await new Promise(r => setTimeout(r, 100))
+  err.stack = cleanStack(err.stack)
   throw err
 }
 
@@ -17,8 +19,8 @@ async function testThrows() {
       message: 'test-error',
       code: /TEST/,
       stack(stack) {
-        if (/anonymous/.test(stack)) {
-          throw new Error('The function has an anonymous stack line.')
+        if (/Module._compile/.test(stack)) {
+          throw new Error('The stack has a Node.js internal line.')
         }
       },
       actual: -1,
@@ -29,13 +31,13 @@ async function testThrows() {
     await throws({
       fn: testThrows,
       message: 'test-error',
-      code: /example/,
+      code: /enotest/i,
       stack(stack) {
-        if (/anonymous/.test(stack)) {
-          throw new Error('The function has an anonymous stack line.')
+        if (/Module._compile/.test(stack)) {
+          throw new Error('The stack has a Node.js internal line.')
         }
       },
-      actual: 1,
+      actual: -1,
       expected: -Infinity,
     })
   } catch ({ stack }) {

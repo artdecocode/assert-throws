@@ -326,6 +326,7 @@ Error: The function has an anonymous call stack line.
 Any number of assertions can be added at the same time, and they will all be executed. However, only the first failing assertion will be presented.
 
 ```js
+import cleanStack from 'clean-stack'
 import throws from 'assert-throws'
 
 async function testThrows() {
@@ -334,6 +335,7 @@ async function testThrows() {
   err.actual = -1
   err.expected = Infinity
   await new Promise(r => setTimeout(r, 100))
+  err.stack = cleanStack(err.stack)
   throw err
 }
 
@@ -345,8 +347,8 @@ async function testThrows() {
       message: 'test-error',
       code: /TEST/,
       stack(stack) {
-        if (/anonymous/.test(stack)) {
-          throw new Error('The function has an anonymous stack line.')
+        if (/Module._compile/.test(stack)) {
+          throw new Error('The stack has a Node.js internal line.')
         }
       },
       actual: -1,
@@ -357,13 +359,13 @@ async function testThrows() {
     await throws({
       fn: testThrows,
       message: 'test-error',
-      code: /example/,
+      code: /enotest/i,
       stack(stack) {
-        if (/anonymous/.test(stack)) {
-          throw new Error('The function has an anonymous stack line.')
+        if (/Module._compile/.test(stack)) {
+          throw new Error('The stack has a Node.js internal line.')
         }
       },
-      actual: 1,
+      actual: -1,
       expected: -Infinity,
     })
   } catch ({ stack }) {
@@ -373,9 +375,10 @@ async function testThrows() {
 ```
 
 ```
-Error: The function has an anonymous stack line.
-    at example (/Users/zavr/adc/assert-throws/example/multiple.js:15:11)
-    at Object.<anonymous> (/Users/zavr/adc/assert-throws/example/multiple.js:44:3)
+Error: [32m-[0m[90mInfinity[0m
+Infinity != -Infinity
+    at example (/Users/zavr/adc/assert-throws/example/multiple.js:31:11)
+    at <anonymous>
 ```
 
 ### Strict Equality

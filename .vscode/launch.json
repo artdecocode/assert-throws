@@ -10,9 +10,12 @@
       "name": "Launch Example",
       "program": "${workspaceFolder}/example/index.js",
       "args": [
-        "example/args"
+        "example/multiple"
       ],
       "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**"
+    ],
     },
     {
       "type": "node",
