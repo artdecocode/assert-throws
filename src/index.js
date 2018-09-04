@@ -14,20 +14,26 @@ const matchString = (errorMessage, m) => {
   equal(errorMessage, m)
 }
 
+const assertRe = (actual, re) => {
+  const res = re.test(actual)
+  if (!res) {
+    throw new Error(`${actual} does not match regular expression ${re}`)
+  }
+}
+
 function assertMessage({ message: errorMessage }, message) {
   if (message instanceof RegExp) {
-    const res = message.test(errorMessage)
-    if (!res) {
-      throw new Error(`${errorMessage} does not match regular expression ${message}`)
-    }
+    assertRe(errorMessage, message)
   } else if (message) {
     matchString(errorMessage, message)
   }
 }
 
-function assertCode(err, code) {
-  if (code) {
-    matchString(err.code, code)
+function assertCode({ code: errorCode }, code) {
+  if (code instanceof RegExp) {
+    assertRe(errorCode, code)
+  } else if (code) {
+    matchString(errorCode, code)
   }
 }
 

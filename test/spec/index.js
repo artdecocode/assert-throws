@@ -128,6 +128,31 @@ const T = {
       equal(l, e)
     }
   },
+  async 'asserts on error code with regular expression'() {
+    await throws({
+      async fn() {
+        const error = new Error('test-error')
+        error.code = 'ENOENT'
+        throw error
+      },
+      code: /ENOENT/,
+    })
+  },
+  async 'fails assert on code with regular expression'() {
+    try {
+      await throws({
+        async fn() {
+          const error = new Error('test-error')
+          error.code = 'ENOENT'
+          throw error
+        },
+        code: /TEST/,
+      })
+      throw new Error('should have thrown')
+    } catch ({ message }) {
+      equal(message, 'ENOENT does not match regular expression /TEST/')
+    }
+  },
   async 'returns an error'() {
     const error = new Error('test-error')
     const actual = await throws({
