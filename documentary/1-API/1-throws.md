@@ -17,6 +17,10 @@ Checks if a function throws an error. As a minimum, the function should be passe
 
 %TYPEDEF types/index.xml%
 
+%EXAMPLE: example/throws.js, ../src => assert-throws%
+
+%FORK example example/throws%
+
 %EXAMPLE: example/throws-fail.js, ../src => assert-throws%
 
 %FORK example example/throws-fail%
@@ -31,7 +35,7 @@ To pass arguments to the tested function, the `args` properties can be used.
 
 ### Context
 
-To pass context to the function, the `context` properties can be set.
+To pass a context to the function, the `context` properties can be set. Otherwise, it will use the global context, unless it was bound.
 
 %EXAMPLE: example/context.js, ../src => assert-throws%
 
