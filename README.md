@@ -25,6 +25,7 @@ yarn add -E assert-throws
     * [string equality](#string-equality)
     * [regular expression](#regular-expression)
   * [Strict Equality](#strict-equality)
+- [TODO](#todo)
 - [Copyright](#copyright)
 
 ## API
@@ -390,6 +391,10 @@ Error: Error: example-error is not strict equal to Error: test-error.
     at example (/Users/zavr/adc/assert-throws/example/strict.js:13:11)
     at <anonymous>
 ```
+
+## TODO
+
+- [ ] Test error stack assertions.
 
 ## Copyright
 
