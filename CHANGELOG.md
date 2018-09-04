@@ -1,3 +1,13 @@
+## 5 September 2018
+
+### 3.1.0
+
+- [feature] Test any property.
+- [feature] Test with a function assertion.
+- [fix] Correctly test when a number is passed.
+- [fix] Return an error without modified stack.
+- [doc] Restructure the documentation around assertions.
+
 ## 4 September 2018
 
 ### 3.0.0
