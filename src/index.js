@@ -45,18 +45,29 @@ function assertStack({ stack: errorStack }, stack) {
   }
 }
 
-const shouldHaveThrownError = new Error('Function should have thrown')
+const shouldHaveThrownError = new Error('Function should have thrown.')
 
 /**
- * Assert that a function throws.
- * @param {object} config
- * @param {function} config.fn Function to test, either sync or async
- * @param {any[]} [config.args] Arguments to pass to the function
- * @param {string|RegExp} [config.message] Message to test against
- * @param {string} [config.code] Code to test against
+ * Assert that a function throws and check its properties.
+ * @param {Config} config Parameters to the `assert-throws` method.
+ * @param {function} config.fn Function to test, either sync or async.
+ * @param {any[]} [config.args] Arguments to pass to the function.
+ * @param {string|RegExp} [config.message] Message to test against.
+ * @param {string|RegExp} [config.code] Code to test against.
+ * @param {string|RegExp} [config.stack] Stack to test against.
  * @param {Error} [config.error] An error to perform strict comparison against.
- * @param {object} [config.context] Context in which to execute the function,
- * global context by default
+ * @param {any} [config.context="null"] The context in which to execute the function. Default `null`.
+ * @example
+ *
+ * import throws from 'assert-throws'
+ * import { method } from './lib'
+ *
+ * await throws({
+ *  fn: method,
+ *  args: ['test', true],
+ *  message: /An error occurred:/,
+ *  code: 'ENOTEST',
+ * })
  */
 export default async function assertThrows(config) {
   const e = erotic(true)
@@ -89,3 +100,15 @@ export default async function assertThrows(config) {
     return e(err)
   }
 }
+
+/* documentary types/index.xml */
+/**
+ * @typedef {Object} Config Parameters to the `assert-throws` method.
+ * @prop {function} fn Function to test, either sync or async.
+ * @prop {any[]} [args] Arguments to pass to the function.
+ * @prop {string|RegExp} [message] Message to test against.
+ * @prop {string|RegExp} [code] Code to test against.
+ * @prop {string|RegExp} [stack] Stack to test against.
+ * @prop {Error} [error] An error to perform strict comparison against.
+ * @prop {any} [context="null"] The context in which to execute the function. Default `null`.
+ */

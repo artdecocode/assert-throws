@@ -23,7 +23,7 @@ const T = {
       })
       throw new Error('should have thrown')
     } catch ({ message }) {
-      equal(message, 'Function should have thrown')
+      equal(message, 'Function should have thrown.')
     }
   },
   async 'asserts on error messages'() {
