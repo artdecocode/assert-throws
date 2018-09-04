@@ -1,14 +1,5 @@
 import throws from '../src'
 
-(async () => {
-  const message = 'test-error-message'
-  await throws({
-    async fn() {
-      throw new Error(message)
-    },
-    message,
-  })
-})()
 
 ;(async () => {
   // ok
@@ -45,18 +36,7 @@ import throws from '../src'
     console.log(2, err) // Error: (color-diff) test-error != error-test
   }
 
-  try {
-    await throws({
-      async fn() {
-        const error = new Error('test-error')
-        error.code = 'ENOENT'
-        throw error
-      },
-      code: 'TNEONE',
-    })
-  } catch (err) {
-    console.log(3, err) // Error: (color-diff) ENOENT != TNEONE
-  }
+
 
   try {
     await throws({
