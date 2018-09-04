@@ -8,6 +8,7 @@
     "test": "yarn t test/spec",
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
+    "d": "NODE_DEBUG=doc doc src/index.js -g",
     "b": "alamode src -o build",
     "build": "yarn-s doc b",
     "e": "node example",
