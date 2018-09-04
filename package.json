@@ -1,6 +1,6 @@
 {
   "name": "assert-throws",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "An assertion method to check if a sync or async function throws and assert on error properties.",
   "main": "build",
   "scripts": {
