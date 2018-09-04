@@ -48,9 +48,6 @@ const T = {
       })
       throw new Error('should have thrown')
     } catch ({ message: m }) {
-      if (ES5) {
-        return equal(m, s)
-      }
       const [l, n] = m.split('\n')
       equal(n, s)
       equal(l, e)
@@ -126,9 +123,6 @@ const T = {
       })
       throw new Error('should have thrown')
     } catch ({ message: m }) {
-      if (ES5) {
-        return equal(m, s)
-      }
       const [l, n] = m.split('\n')
       equal(n, s)
       equal(l, e)
