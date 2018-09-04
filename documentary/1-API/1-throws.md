@@ -15,3 +15,19 @@ Checks if a function throws an error. As a minimum, the function should be passe
 %EXAMPLE: example/throws-fail.js, ../src => assert-throws%
 
 %FORK example example/throws-fail%
+
+### Arguments
+
+To pass arguments to the tested function, the `args` properties can be used.
+
+%EXAMPLE: example/args.js, ../src => assert-throws%
+
+%FORK example example/args%
+
+### Context
+
+To pass context to the function, the `context` properties can be set.
+
+%EXAMPLE: example/context.js, ../src => assert-throws%
+
+%FORK example example/context%
