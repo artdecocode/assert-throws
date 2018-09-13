@@ -19,6 +19,18 @@ const T = {
     })
     ok(called)
   },
+  // async 'passes correct error stack for assertions'() {
+  //   const fn = async () => {
+  //     await new Promise(r => setTimeout(r, 10))
+  //     throw new Error('test-error')
+  //   }
+  //   await throws({
+  //     fn,
+  //     stack(stack) {
+  //       debugger
+  //     },
+  //   })
+  // },
   async 'throws if function does not throw'({ assertThrows }) {
     await assertThrows(throws, {
       fn() {},
