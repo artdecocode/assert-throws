@@ -1,3 +1,9 @@
+## 13 September
+
+### 3.1.1
+
+- [deps] Update dependencies.
+
 ## 5 September 2018
 
 ### 3.1.0
