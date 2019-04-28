@@ -1,4 +1,11 @@
-## 13 September
+## 29 April 2019
+
+### [3.2.0](https://github.com/artdecocode/assert-throws/compare/v3.1.1...v3.2.0)
+
+- [package] Publish the `module` field with source code.
+- [externs] Publish the externs and add the namespace to the types.
+
+## 13 September 2018
 
 ### 3.1.1
 
