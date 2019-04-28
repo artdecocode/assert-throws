@@ -1,4 +1,3 @@
-
 ```### async throws => Error
 [
   ["config", {
@@ -17,26 +16,32 @@ Checks if a function throws an error. As a minimum, the function should be passe
 
 %TYPEDEF types/index.xml%
 
-%EXAMPLE: example/throws.js, ../src => assert-throws%
+%EXAMPLE: example/throws, ../src => assert-throws%
 
-%FORK example example/throws%
+%FORK example/throws%
 
-%EXAMPLE: example/throws-fail.js, ../src => assert-throws%
+%EXAMPLE: example/throws-fail, ../src => assert-throws%
 
-%FORK example example/throws-fail%
+%FORK example/throws-fail%
+
+%~ width="25"%
 
 ### Arguments
 
 To pass arguments to the tested function, the `args` properties can be used.
 
-%EXAMPLE: example/args.js, ../src => assert-throws%
+%EXAMPLE: example/args, ../src => assert-throws%
 
-%FORK example example/args%
+%FORK example/args%
 
 ### Context
 
+%~ width="25"%
+
 To pass a context to the function, the `context` properties can be set. Otherwise, it will use the global context, unless it was bound.
 
-%EXAMPLE: example/context.js, ../src => assert-throws%
+%EXAMPLE: example/context, ../src => assert-throws%
 
-%FORK example example/context%
+%FORK example/context%
+
+%~%

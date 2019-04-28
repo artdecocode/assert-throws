@@ -1,25 +1,25 @@
-<types>
-  <type name="Assertion" desc="An assertion to perform." type="string|RegExp|function" />
+<types namespace="_assertThrows">
+  <type name="Assertion" desc="An assertion to perform." type="!(string|RegExp|function)" />
   <type name="Config" desc="Parameters to the `assert-throws` method.">
-    <prop name="fn" type="function">
-      Function to test, either sync or async.
+    <prop name="fn" type="!Function">
+      The function to test, either sync or async.
     </prop>
-    <prop opt name="args" type="any|any[]">
-      Arguments to pass to the function.
+    <prop opt name="args" type="*|!Array<*>">
+      The arguments or single argument to pass to the function.
     </prop>
-    <prop opt name="context" type="any">
+    <prop opt name="context" type="*">
       The context in which to execute the function. Global context will be set by default.
     </prop>
-    <prop opt name="message" type="Assertion">
+    <prop opt name="message" type="_assertThrows.Assertion">
       A string, regex, or function to test the message.
     </prop>
-    <prop opt name="code" type="Assertion">
+    <prop opt name="code" type="_assertThrows.Assertion">
       A string, regex, or function to test the code.
     </prop>
-    <prop opt name="stack" type="Assertion">
+    <prop opt name="stack" type="_assertThrows.Assertion">
       A string, regex, or function to test the stack.
     </prop>
-    <prop opt name="prop" type="Assertion">
+    <prop opt name="prop" type="_assertThrows.Assertion">
       A string, regex, or function to test any other property of the error.
     </prop>
     <prop opt name="error" type="Error">

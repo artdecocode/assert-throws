@@ -1,8 +1,9 @@
-
 ### Strict Equality
 
 `assert-throws` allows to assert on a strict equality of an error.
 
-%EXAMPLE: example/strict.js, ../src => assert-throws%
+%EXAMPLE: example/strict, ../src => assert-throws%
 
-%FORK example example/strict%
+%FORK example/strict%
+
+%~ width="25"%

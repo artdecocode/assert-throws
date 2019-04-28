@@ -1,21 +1,21 @@
-
 ### RegExp Test
 
 Moreover, a regular expression can be used to validate an error's property.
 
-%EXAMPLE: example/regexp.js, ../src => assert-throws%
+%EXAMPLE: example/regexp, ../src => assert-throws%
 
-%FORK example example/regexp%
+%FORK example/regexp%
 
+%~ width="25"%
 
 <!-- A `message` property can be set to assert on the [string equality](t) of the error message.
 
-%EXAMPLE: example/message.js, ../src => assert-throws%
+%EXAMPLE: example/message, ../src => assert-throws%
 
-%FORK example example/message%
+%FORK example/message%
 
 The `message` can be a [regular expression](t):
 
-%EXAMPLE: example/message-regexp.js, ../src => assert-throws%
+%EXAMPLE: example/message-regexp, ../src => assert-throws%
 
-%FORK example example/message-regexp% -->
+%FORK example/message-regexp% -->

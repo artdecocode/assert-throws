@@ -37,29 +37,27 @@ const assert = async (prop, assertion) => {
 
 /**
  * Assert that a function throws and check the thrown error properties.
- * @param {Config} config Parameters to the `assert-throws` method.
- * @param {function} config.fn Function to test, either sync or async.
- * @param {any|any[]} [config.args] Arguments to pass to the function.
- * @param {any} [config.context] The context in which to execute the function. Global context will be set by default.
- * @param {Assertion} [config.message] A string, regex, or function to test the message.
- * @param {Assertion} [config.code] A string, regex, or function to test the code.
- * @param {Assertion} [config.stack] A string, regex, or function to test the stack.
- * @param {Assertion} [config.prop] A string, regex, or function to test any other property of the error.
+ * @param {_assertThrows.Config} config Parameters to the `assert-throws` method.
+ * @param {!Function} config.fn The function to test, either sync or async.
+ * @param {*|!Array<*>} [config.args] The arguments or single argument to pass to the function.
+ * @param {*} [config.context] The context in which to execute the function. Global context will be set by default.
+ * @param {_assertThrows.Assertion} [config.message] A string, regex, or function to test the message.
+ * @param {_assertThrows.Assertion} [config.code] A string, regex, or function to test the code.
+ * @param {_assertThrows.Assertion} [config.stack] A string, regex, or function to test the stack.
+ * @param {_assertThrows.Assertion} [config.prop] A string, regex, or function to test any other property of the error.
  * @param {Error} [config.error] An error to perform strict comparison against.
  * @example
- *
- * import throws from 'assert-throws'
- * import { method } from './lib'
- *
- * await throws({
- *  fn: method,
- *  args: ['test', true],
- *  message: /An error occurred:/, // regex
- *  code: 'ENOTEST',               // string
- *  stack(stack) {                 // function
- *    equal(stack.length, 2)
- *  }
- * })
+```
+await throws({
+  fn: method,
+  args: ['test', true],
+  message: /An error occurred:/, // regex
+  code: 'ENOTEST',               // string
+  stack(stack) {                 // function
+    equal(stack.length, 2)
+  }
+})
+```
  */
 export default async function assertThrows(config) {
   if (!config) throw new Error('Config expected.')
@@ -110,15 +108,26 @@ const wrap = async (fn, context, args, error, props) => {
 
 /* documentary types/index.xml */
 /**
- * @typedef {string|RegExp|function} Assertion An assertion to perform.
- *
- * @typedef {Object} Config Parameters to the `assert-throws` method.
- * @prop {function} fn Function to test, either sync or async.
- * @prop {any|any[]} [args] Arguments to pass to the function.
- * @prop {any} [context] The context in which to execute the function. Global context will be set by default.
- * @prop {Assertion} [message] A string, regex, or function to test the message.
- * @prop {Assertion} [code] A string, regex, or function to test the code.
- * @prop {Assertion} [stack] A string, regex, or function to test the stack.
- * @prop {Assertion} [prop] A string, regex, or function to test any other property of the error.
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_assertThrows._assertThrows.Assertion} _assertThrows.Assertion An assertion to perform.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {!(string|RegExp|function)} _assertThrows._assertThrows.Assertion An assertion to perform.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_assertThrows.Config} Config Parameters to the `assert-throws` method.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {Object} _assertThrows.Config Parameters to the `assert-throws` method.
+ * @prop {!Function} fn The function to test, either sync or async.
+ * @prop {*|!Array<*>} [args] The arguments or single argument to pass to the function.
+ * @prop {*} [context] The context in which to execute the function. Global context will be set by default.
+ * @prop {_assertThrows.Assertion} [message] A string, regex, or function to test the message.
+ * @prop {_assertThrows.Assertion} [code] A string, regex, or function to test the code.
+ * @prop {_assertThrows.Assertion} [stack] A string, regex, or function to test the stack.
+ * @prop {_assertThrows.Assertion} [prop] A string, regex, or function to test any other property of the error.
  * @prop {Error} [error] An error to perform strict comparison against.
  */

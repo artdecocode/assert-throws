@@ -5,16 +5,18 @@
 `assert-throws` is an assertion method for Node.js which checks if a synchronous or asynchronous function throws. It can also compare properties of the error (such as `message`, `code` and `stack` and any other) with expected ones using string strict equality, a regular expression, or a function.
 
 ```
-yarn add -E assert-throws
+yarn add -D assert-throws
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
 - [API](#api)
   * [`async throws(config: Config): Error`](#async-throwsconfig-fn-functionargs-anyanycontext-anymessage-assertioncode-assertionerror-assertionprop-assertion-error)
-    * [`Assertion`](#assertion)
-    * [`Config`](#config)
+    * [`_assertThrows.Assertion`](#type-_assertthrowsassertion)
+    * [`_assertThrows.Config`](#type-_assertthrowsconfig)
   * [Arguments](#arguments)
   * [Context](#context)
 - [Assertions](#assertions)
@@ -23,8 +25,9 @@ yarn add -E assert-throws
   * [Function Evaluation](#function-evaluation)
   * [Multiple Assertions](#multiple-assertions)
   * [Strict Equality](#strict-equality)
-- [TODO](#todo)
 - [Copyright](#copyright)
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -34,24 +37,26 @@ The package exports the default `throws` function.
 import throws from 'assert-throws'
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true" width="25"></a></p>
+
 ### `async throws(`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`fn: function,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`args?: any|any[],`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`context?: any,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`message?: Assertion,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`code?: Assertion,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`error?: Assertion,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`[prop]?: Assertion,`<br/>&nbsp;&nbsp;`},`<br/>`): Error`
 
 Checks if a function throws an error. As a minimum, the function should be passed in the `fn` property. If the assertion passes, the method returns the error which was thrown by the tested function.
 
-`string|RegExp|function` __<a name="assertion">`Assertion`</a>__: An assertion to perform.
+`!(string|RegExp|function)` __<a name="type-_assertthrowsassertion">`_assertThrows.Assertion`</a>__: An assertion to perform.
 
-__<a name="config">`Config`</a>__: Parameters to the `assert-throws` method.
+__<a name="type-_assertthrowsconfig">`_assertThrows.Config`</a>__: Parameters to the `assert-throws` method.
 
-| Name | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-| __fn*__ | _function_ | Function to test, either sync or async. | - |
-| args | _any\|any[]_ | Arguments to pass to the function. | - |
-| context | _any_ | The context in which to execute the function. Global context will be set by default. | - |
-| message | [_Assertion_](#assertion) | A string, regex, or function to test the message. | - |
-| code | [_Assertion_](#assertion) | A string, regex, or function to test the code. | - |
-| stack | [_Assertion_](#assertion) | A string, regex, or function to test the stack. | - |
-| prop | [_Assertion_](#assertion) | A string, regex, or function to test any other property of the error. | - |
-| error | _Error_ | An error to perform strict comparison against. | - |
+|  Name   |                               Type                               |                                     Description                                      |
+| ------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| __fn*__ | <em>!Function</em>                                               | The function to test, either sync or async.                                          |
+| args    | <em>(* \\| !Array&lt;*&gt;)</em>                                 | The arguments or single argument to pass to the function.                            |
+| context | <em>*</em>                                                       | The context in which to execute the function. Global context will be set by default. |
+| message | <em>[_assertThrows.Assertion](#type-_assertthrowsassertion)</em> | A string, regex, or function to test the message.                                    |
+| code    | <em>[_assertThrows.Assertion](#type-_assertthrowsassertion)</em> | A string, regex, or function to test the code.                                       |
+| stack   | <em>[_assertThrows.Assertion](#type-_assertthrowsassertion)</em> | A string, regex, or function to test the stack.                                      |
+| prop    | <em>[_assertThrows.Assertion](#type-_assertthrowsassertion)</em> | A string, regex, or function to test any other property of the error.                |
+| error   | <em>Error</em>                                                   | An error to perform strict comparison against.                                       |
 
 ```js
 import throws from 'assert-throws'
@@ -104,7 +109,11 @@ const testThrows = async () => {
 Error: Function testThrows should have thrown.
     at example (/Users/zavr/adc/assert-throws/example/throws-fail.js:9:11)
     at Object.<anonymous> (/Users/zavr/adc/assert-throws/example/throws-fail.js:15:3)
+    at Module.r._compile (/Users/zavr/adc/assert-throws/node_modules/alamode/depack/depack-lib.js:836:20)
+    at Object.l.(anonymous function).E._extensions.(anonymous function) [as .js] (/Users/zavr/adc/assert-throws/node_modules/alamode/depack/depack-lib.js:839:7)
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true" width="25"></a></p>
 
 ### Arguments
 
@@ -157,6 +166,8 @@ Error: Function testThrows should have thrown.
 
 ### Context
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true" width="25"></a></p>
+
 To pass a context to the function, the `context` properties can be set. Otherwise, it will use the global context, unless it was bound.
 
 ```js
@@ -190,9 +201,13 @@ Error: Function testThrows should have thrown.
     at <anonymous>
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
+
 ## Assertions
 
 If a function throws, any of the error properties can be tested. Every property specified in the configuration will test a property of the error, e.g., `message`, `code` and others.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/6.svg?sanitize=true" width="25"></a></p>
 
 ### String Equality
 
@@ -226,11 +241,13 @@ async function testThrows() {
 ```
 
 ```
-Error: [31mtest[0m[32mwrong[0m[90m-error[0m
+Error: testwrong-error
 test-error != wrong-error
     at example (/Users/zavr/adc/assert-throws/example/string.js:17:11)
     at <anonymous>
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg?sanitize=true" width="25"></a></p>
 
 
 
@@ -272,6 +289,8 @@ Error: ENOENT does not match regular expression /ENOEXMPL/
     at example (/Users/zavr/adc/assert-throws/example/regexp.js:19:11)
     at <anonymous>
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg?sanitize=true" width="25"></a></p>
 
 
 
@@ -320,6 +339,8 @@ Error: The function has an anonymous call stack line.
     at example (/Users/zavr/adc/assert-throws/example/function.js:22:11)
     at <anonymous>
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true" width="25"></a></p>
 
 ### Multiple Assertions
 
@@ -375,11 +396,10 @@ async function testThrows() {
 ```
 
 ```
-Error: [32m-[0m[90mInfinity[0m
-Infinity != -Infinity
-    at example (/Users/zavr/adc/assert-throws/example/multiple.js:31:11)
-    at <anonymous>
+
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true" width="25"></a></p>
 
 ### Strict Equality
 
@@ -420,12 +440,9 @@ Error: Error: test-error is not strict equal to Error: Another error..
     at <anonymous>
 ```
 
-## TODO
-
-- [ ] Test error stack assertions.
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true" width="25"></a></p>
 
 ## Copyright
 
-(c) [Art Deco][1] 2018
 
-[1]: https://artdeco.bz
+  (c) [Context Testing](https://contexttesting.com) 2019

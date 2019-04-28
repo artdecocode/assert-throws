@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Example",
-      "program": "${workspaceFolder}/example/index.js",
+      "program": "${workspaceFolder}/node_modules/.bin/alanode",
       "args": [
         "example/multiple"
       ],

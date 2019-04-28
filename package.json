@@ -2,21 +2,27 @@
   "name": "assert-throws",
   "version": "3.1.1",
   "description": "An assertion method to check if a sync or async function throws and assert on error properties.",
-  "main": "build",
+  "main": "build/index.js",
+  "module": "src/index.js",
   "scripts": {
     "t": "zoroaster -a",
     "test": "yarn t test/spec",
     "test-build": "ALAMODE_ENV=test-build yarn test",
-    "doc": "NODE_DEBUG=doc doc documentary -o README.md",
-    "d": "NODE_DEBUG=doc doc src/index.js -g",
-    "b": "alamode src -o build",
+    "doc": "NODE_DEBUG=doc doc -o README.md",
+    "d": "yarn-s d1 externs",
+    "b": "alamode src -o build -s",
     "build": "yarn-s doc b d",
-    "e": "node example",
-    "example/message": "yarn e example/message"
+    "e": "alanode",
+    "example/message": "yarn e example/message",
+    "externs": "typal externs.js -e",
+    "d1": "typal src -c"
   },
   "files": [
-    "build"
+    "build",
+    "src",
+    "externs.js"
   ],
+  "externs": "externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/artdecocode/assert-throws.git"
