@@ -1,4 +1,4 @@
-import cleanStack from 'clean-stack'
+import cleanStack from '@artdeco/clean-stack'
 import throws from '../src'
 
 async function testThrows() {

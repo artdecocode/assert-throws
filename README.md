@@ -347,7 +347,7 @@ Error: The function has an anonymous call stack line.
 Any number of assertions can be added at the same time, and they will all be executed. However, only the first failing assertion will be presented.
 
 ```js
-import cleanStack from 'clean-stack'
+import cleanStack from '@artdeco/clean-stack'
 import throws from 'assert-throws'
 
 async function testThrows() {
@@ -396,7 +396,10 @@ async function testThrows() {
 ```
 
 ```
-
+Error: -Infinity
+Infinity != -Infinity
+    at example (/Users/zavr/adc/assert-throws/example/multiple.js:31:11)
+    at <anonymous>
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true" width="25"></a></p>
