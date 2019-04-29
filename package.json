@@ -44,13 +44,13 @@
   "homepage": "https://github.com/artdecocode/assert-throws#readme",
   "devDependencies": {
     "alamode": "2.0.0",
-    "documentary": "1.26.1",
+    "documentary": "1.26.2",
     "snapshot-context": "2.2.2",
     "yarn-s": "1.1.0",
     "zoroaster": "3.13.0"
   },
   "dependencies": {
-    "erotic": "2.1.1",
-    "erte": "1.1.7"
+    "erotic": "^2.1.1",
+    "erte": "^1.2.0"
   }
 }
