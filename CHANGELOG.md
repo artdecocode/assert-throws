@@ -1,5 +1,9 @@
 ## 29 April 2019
 
+### [3.2.1](https://github.com/artdecocode/assert-throws/compare/v3.2.0...v3.2.1)
+
+- [deps] Update and unlock dependencies.
+
 ### [3.2.0](https://github.com/artdecocode/assert-throws/compare/v3.1.1...v3.2.0)
 
 - [package] Publish the `module` field with source code.
