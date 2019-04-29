@@ -43,7 +43,7 @@ import throws from 'assert-throws'
 
 Checks if a function throws an error. As a minimum, the function should be passed in the `fn` property. If the assertion passes, the method returns the error which was thrown by the tested function.
 
-`!(string|RegExp|function)` __<a name="type-_assertthrowsassertion">`_assertThrows.Assertion`</a>__: An assertion to perform.
+`!(string|RegExp|!Function)` __<a name="type-_assertthrowsassertion">`_assertThrows.Assertion`</a>__: An assertion to perform.
 
 __<a name="type-_assertthrowsconfig">`_assertThrows.Config`</a>__: Parameters to the `assert-throws` method.
 

@@ -1,3 +1,9 @@
+## 30 April 2019
+
+### [3.2.2](https://github.com/artdecocode/assert-throws/compare/v3.2.1...v3.2.2)
+
+- [externs] Correct the `externs` and types.
+
 ## 29 April 2019
 
 ### [3.2.1](https://github.com/artdecocode/assert-throws/compare/v3.2.0...v3.2.1)

@@ -109,11 +109,11 @@ const wrap = async (fn, context, args, error, props) => {
 /* documentary types/index.xml */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {_assertThrows._assertThrows.Assertion} _assertThrows.Assertion An assertion to perform.
+ * @typedef {_assertThrows.Assertion} Assertion An assertion to perform.
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {!(string|RegExp|function)} _assertThrows._assertThrows.Assertion An assertion to perform.
+ * @typedef {!(string|RegExp|!Function)} _assertThrows.Assertion An assertion to perform.
  */
 /**
  * @suppress {nonStandardJsDocs}

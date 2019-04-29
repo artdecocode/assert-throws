@@ -1,5 +1,5 @@
 <types namespace="_assertThrows">
-  <type name="Assertion" desc="An assertion to perform." type="!(string|RegExp|function)" />
+  <type name="Assertion" desc="An assertion to perform." type="!(string|RegExp|!Function)" />
   <type name="Config" desc="Parameters to the `assert-throws` method.">
     <prop name="fn" type="!Function">
       The function to test, either sync or async.
