@@ -20,7 +20,8 @@
   "files": [
     "build",
     "src",
-    "externs.js"
+    "externs.js",
+    "types"
   ],
   "externs": "externs.js",
   "repository": {
@@ -45,7 +46,6 @@
   "devDependencies": {
     "alamode": "2.0.0",
     "documentary": "1.26.2",
-    "snapshot-context": "2.2.2",
     "yarn-s": "1.1.0",
     "zoroaster": "3.13.0"
   },
